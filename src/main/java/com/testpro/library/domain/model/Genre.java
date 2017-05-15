@@ -15,18 +15,6 @@ public final class Genre {
         this.description = description;
     }
 
-    public Genre(final int id) {
-        this.id = id;
-        this.name = null;
-        this.description = null;
-    }
-
-    public Genre(final String name) {
-        this.id = 0;
-        this.name = name;
-        this.description = null;
-    }
-
     public int getId() {
         return id;
     }

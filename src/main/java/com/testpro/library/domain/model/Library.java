@@ -9,36 +9,12 @@ public final class Library {
     private final String name;              //Наименование учреждения
     private final String address;           //Адрес учреждения
     private final int quantityWorker;       //количество работников
-    private final int quantityBooks;        //Количество книг в библиотеке
-    private final int quantityVisitors;     //Количество посетителей в месяц
 
-
-    public Library(final int id, final String name, final String address,
-                   final int quantityWorker, final int quantityBooks, final int quantityVisitors) {
+    public Library(final int id, final String name, final String address, final int quantityWorker) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.quantityWorker = quantityWorker;
-        this.quantityBooks = quantityBooks;
-        this.quantityVisitors = quantityVisitors;
-    }
-
-    public Library(final int id) {
-        this.id = id;
-        this.name = null;
-        this.address = null;
-        this.quantityWorker = 0;
-        this.quantityBooks = 0;
-        this.quantityVisitors = 0;
-    }
-
-    public Library(final String name) {
-        this.id = 0;
-        this.name = name;
-        this.address = null;
-        this.quantityWorker = 0;
-        this.quantityBooks = 0;
-        this.quantityVisitors = 0;
     }
 
     public int getId() {
@@ -57,11 +33,4 @@ public final class Library {
         return quantityWorker;
     }
 
-    public int getQuantityBooks() {
-        return quantityBooks;
-    }
-
-    public int getQuantityVisitors() {
-        return quantityVisitors;
-    }
 }

@@ -10,34 +10,14 @@ public final class PublishingHouse {
     private final String address;           //Адрес
     private final String phone;             //Контактный телефон
     private final String contact;           //Контактное лицо
-    private final int quantityBook;         //Количество выпущенных книг
 
     public PublishingHouse(final int id, final String name, final String address, final String phone,
-                           final String contact, final int quantityBook) {
+                           final String contact) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.contact = contact;
-        this.quantityBook = quantityBook;
-    }
-
-    public PublishingHouse(final int id) {
-        this.id = id;
-        this.name = null;
-        this.address = null;
-        this.phone = null;
-        this.contact = null;
-        this.quantityBook = 0;
-    }
-
-    public PublishingHouse(final String name) {
-        this.id = 0;
-        this.name = name;
-        this.address = null;
-        this.phone = null;
-        this.contact = null;
-        this.quantityBook = 0;
     }
 
     public int getId() {
@@ -60,7 +40,4 @@ public final class PublishingHouse {
         return contact;
     }
 
-    public int getQuantityBook() {
-        return quantityBook;
-    }
 }

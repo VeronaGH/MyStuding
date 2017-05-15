@@ -4,71 +4,52 @@ package com.testpro.library.domain.model;
  * Created by Pigas on 11.05.2017.
  */
 public final class Journal {
+    public enum State {inSight, isGiven, isSpoiled, isUnderRestoration, isCommingSoon}         //Перечисление состояний (в наличии, на руках, испорчена, реставрируется, скоро поступит в библиотеку)
 
-    private final int id;                   //ID
-    private final String name;              //Название журналла
-    private final String address;           //Адрес
-    private final String phone;             //Контактный телефон
-    private final String contact;           //Контактное лицо
-    private final int circulation;          //Тираж
-    private final String type;              //Вид издания (периодичность)
+    private final long id;                      //ID
+    private final Library forLib;               //Название библиотеки, которой принадлежит журнал
+    private final Book book;                    //Название книги
+    private final String dayTaken;              //Время когда взял на руки
+    private final String dayReturn;             //Время когда вернул на руки
+    private final Reeder reeder;                //Читатель
+    private final State state;                  //Состояние
 
-    public Journal(final int id, final String name, final String address, final String phone,
-                           final String contact, final int circulation, final String type) {
+    public Journal(final long id, final Library forLib, final Book book, final String dayTaken,
+                   final String dayReturn, final Reeder reeder, final State state) {
         this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
-        this.contact = contact;
-        this.circulation = circulation;
-        this.type = type;
+        this.forLib = forLib;
+        this.book = book;
+        this.dayTaken = dayTaken;
+        this.dayReturn = dayReturn;
+        this.reeder = reeder;
+        this.state = state;
     }
 
-    public Journal(final int id) {
-        this.id = id;
-        this.name = null;
-        this.address = null;
-        this.phone = null;
-        this.contact = null;
-        this.circulation = 0;
-        this.type = null;
-    }
-
-    public Journal(final String name) {
-        this.id = 0;
-        this.name = name;
-        this.address = null;
-        this.phone = null;
-        this.contact = null;
-        this.circulation = 0;
-        this.type = null;
-    }
-
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public Library getForLib() {
+        return forLib;
     }
 
-    public String getAddress() {
-        return address;
+    public Book getBook() {
+        return book;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getDayTaken() {
+        return dayTaken;
     }
 
-    public String getContact() {
-        return contact;
+    public String getDayReturn() {
+        return dayReturn;
     }
 
-    public int getCirculation() {
-        return circulation;
+    public Reeder getReeder() {
+        return reeder;
     }
 
-    public String getType() {
-        return type;
+    public State getState() {
+        return state;
     }
 }
