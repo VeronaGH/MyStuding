@@ -1,10 +1,14 @@
 package com.testpro.library.domain.model;
 
+import org.springframework.data.annotation.Id;
+
+import java.io.Serializable;
+
 /**
  * Created by Pigas on 11.05.2017.
  */
-public final class Autor {
-
+public final class Author implements Serializable{
+    @Id
     private final int id;                       //ID
     private final String name;                  //Имя автора
     private final String surname;               //Фамилия автора
@@ -13,8 +17,8 @@ public final class Autor {
     private final String biography;             //Краткая биография
     private final boolean stillAlive;           //Статус - Все еще жив)
 
-    public Autor(final int id, final String name, final String surname, final int yearOfBirth,
-                 final String citizenship, final String biography, final boolean stillAlive) {
+    public Author(final int id, final String name, final String surname, final int yearOfBirth,
+                  final String citizenship, final String biography, final boolean stillAlive) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -22,6 +26,15 @@ public final class Autor {
         this.citizenship = citizenship;
         this.biography = biography;
         this.stillAlive = stillAlive;
+    }
+
+    @Override
+    public String toString() {
+        String author = new String();
+        author = author.concat("id : " + id + ",    name : " + name + ",    surname : " + surname
+                + ",    yearOfBirth : " + yearOfBirth + ",    citizenship : " + citizenship
+                + ",    biography : " + biography + ",    stillAlive : " + stillAlive);
+        return author;
     }
 
     public int getId() {

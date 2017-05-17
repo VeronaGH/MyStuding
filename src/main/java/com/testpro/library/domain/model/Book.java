@@ -10,7 +10,7 @@ public final class Book {
     private final int id;                                                                       //ID
     private final Library lib;                                                                  //Находится в библиотеке
     private final String name;                                                                  //Название книги
-    private final Autor autor;                                                                  //Автор книги
+    private final Author author;                                                                  //Автор книги
     private final Genre genre;                                                                  //Жанр
     private final String publishingHouse;                                                       //Издательство
     private final int yearPublish;                                                              //Год издания
@@ -18,13 +18,13 @@ public final class Book {
     private final String description;                                                           //Краткое описание
     private final State state;                                                                  //Текущее состояние
 
-    public Book(final int id, final Library lib, final String name, final Autor autor, final Genre genre,
+    public Book(final int id, final Library lib, final String name, final Author author, final Genre genre,
                 final String publishingHouse, final int yearPublish, final boolean bestSeler, final String description,
                 final State state) {
         this.id = id;
         this.lib = lib;
         this.name = name;
-        this.autor = autor;
+        this.author = author;
         this.genre = genre;
         this.publishingHouse = publishingHouse;
         this.yearPublish = yearPublish;
@@ -43,7 +43,7 @@ public final class Book {
         return name;
     }
 
-    public Autor getAutor() {return autor;}
+    public Author getAutor() {return author;}
 
     public Genre getGenre() {return genre;}
 
