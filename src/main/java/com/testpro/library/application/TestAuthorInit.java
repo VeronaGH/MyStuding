@@ -4,12 +4,14 @@ import com.testpro.library.domain.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Created by Pigas on 17.05.2017.
+ * Application for testing AuthorRepository, fulfilling repository "Author" with
+ * test entity using method init of AuthorRepository class
  */
 @Controller
-@RequestMapping("/test/init")
+@RequestMapping("/library/v1/init")
 public class TestAuthorInit {
 
     private final AuthorService authorService;
@@ -19,7 +21,7 @@ public class TestAuthorInit {
         this.authorService = authorService;
     }
 
-    @RequestMapping
+    @RequestMapping(method = RequestMethod.GET)
     public void init(){
         authorService.init();
     }

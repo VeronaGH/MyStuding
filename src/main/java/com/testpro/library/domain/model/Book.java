@@ -1,25 +1,55 @@
 package com.testpro.library.domain.model;
 
+import org.springframework.data.annotation.Id;
+
 /**
- * Created by Pigas on 11.05.2017.
+ * Entity class for entity "Book", immutable, has full constructor, has n't got overridden method toString();
  */
 public final class Book {
 
-    public enum State {inSight, isGiven, isSpoiled, isUnderRestoration, isCommingSoon}         //Перечисление состояний (в наличии, на руках, испорчена, реставрируется, скоро поступит в библиотеку)
+    /**
+     * enum determining the state of a book
+     */
+    public enum State {
+        /**
+         * Stored at the library
+         */
+        inSight,
 
-    private final int id;                                                                       //ID
-    private final Library lib;                                                                  //Находится в библиотеке
-    private final String name;                                                                  //Название книги
-    private final Author author;                                                                  //Автор книги
-    private final Genre genre;                                                                  //Жанр
-    private final String publishingHouse;                                                       //Издательство
-    private final int yearPublish;                                                              //Год издания
-    private final boolean bestSeler;                                                            //Является ли бестселлером
-    private final String description;                                                           //Краткое описание
-    private final State state;                                                                  //Текущее состояние
+        /**
+         * Reader has taken this book
+         */
+        isGiven,
+
+        /**
+         * Tre book is spoiled and is waiting for reparation
+         */
+        isSpoiled,
+
+        /**
+         * The book is under reparation
+         */
+        isUnderRestoration,
+
+        /**
+         * The book is coming soon to the library
+         */
+        isCommingSoon};
+
+    @Id
+    private final int id;
+    private final Library lib;
+    private final String name;
+    private final Author author;
+    private final Genre genre;
+    private final String publishingHouse;
+    private final int yearPublish;
+    private final boolean bestSeller;
+    private final String description;
+    private final State state;
 
     public Book(final int id, final Library lib, final String name, final Author author, final Genre genre,
-                final String publishingHouse, final int yearPublish, final boolean bestSeler, final String description,
+                final String publishingHouse, final int yearPublish, final boolean bestSeller, final String description,
                 final State state) {
         this.id = id;
         this.lib = lib;
@@ -28,7 +58,7 @@ public final class Book {
         this.genre = genre;
         this.publishingHouse = publishingHouse;
         this.yearPublish = yearPublish;
-        this.bestSeler = bestSeler;
+        this.bestSeller = bestSeller;
         this.description = description;
         this.state = state;
     }
@@ -55,7 +85,7 @@ public final class Book {
         return yearPublish;
     }
 
-    public boolean isBestSeler() {return bestSeler;}
+    public boolean isBestSeller() {return bestSeller;}
 
     public String getDescription() {
         return description;

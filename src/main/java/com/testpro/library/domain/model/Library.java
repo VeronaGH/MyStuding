@@ -1,14 +1,15 @@
 package com.testpro.library.domain.model;
 
 /**
- * Created by Pigas on 11.05.2017.
+ * Entity class for entity "Library", immutable, has full constructor, has n't got overridden method toString();
+ * Is necessary for storing a list of libraries.
  */
 public final class Library {
 
-    private final int id;                   //ID
-    private final String name;              //Наименование учреждения
-    private final String address;           //Адрес учреждения
-    private final int quantityWorker;       //количество работников
+    private final int id;
+    private final String name;
+    private final String address;
+    private final int quantityWorker;
 
     public Library(final int id, final String name, final String address, final int quantityWorker) {
         this.id = id;

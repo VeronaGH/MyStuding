@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by Pigas on 16.05.2017.
+ * Test service containing methods initial creating db AuthorRepository and testing asses methods.
  */
 @Service
 public class AuthorService {
@@ -17,7 +17,6 @@ public class AuthorService {
     public void init() {
         authorRepository.deleteAll();
 
-        //Добавление 5 авторов
         authorRepository.save(new Author(1,
                 "Paul",
                 "Jenkins",
@@ -73,53 +72,56 @@ public class AuthorService {
                 "New Zeland",
                 "A brother of a quiet boy from a remote province",
                 true));
+
+        System.out.println("Initialisation complete...");
         }
 
         public void check(){
-            //Вывод на печать всего что есть в базе
             int l = 0;
-            System.out.println("Извлечение из таблици всех записей");
+            System.out.println("Printing all data from db");
             for (Author author : authorRepository.findAll()) {
                 l++;
-                System.out.print("Запись №" + l + ": ");
+                System.out.print("Line №" + l + ": ");
                 System.out.println(author.toString());
             }
             l = 0;
-            System.out.println("Извлечение из таблици записи по имени 'David': ");
+            System.out.println("Printing lines from db with name 'David': ");
             for (Author author : authorRepository.findAllByName("David")) {
                 l++;
-                System.out.print("Запись №" + l + ": ");
+                System.out.print("Line №" + l + ": ");
                 System.out.println(author.toString());
             }
 
             l = 0;
-            System.out.println("Извлечение из таблици записи по фамилии 'Fresto': ");
+            System.out.println("Printing lines from db with surname 'Fresto': ");
             for (Author author : authorRepository.findAllBySurname("Fresto")) {
                 l++;
-                System.out.print("Запись №" + l + ": ");
+                System.out.print("Line №" + l + ": ");
                 System.out.println(author.toString());
             }
 
             l = 0;
-            System.out.println("Извлечение из таблици записи по параметрам:" +
-                    " год рождения, Имя, Фамилия (Omar Haiam, 1000): ");
+            System.out.println("Printing lines from db with parameters:" +
+                    " year of birth, name, surname (Omar Haiam, 1000): ");
             System.out.println(authorRepository.findByNameAndSurnameAndYearOfBirth("Omar",
                     "Haiam", 1000).toString());
 
             l = 0;
-            System.out.println("Извлечение из таблици записи по году рождения 1985: ");
+            System.out.println("Printing lines from db with year of birth 1985: ");
             for (Author author : authorRepository.findAllByYearOfBirth(1985)){
                 l++;
-                System.out.print("Запись №" + l + ": ");
+                System.out.print("Line №" + l + ": ");
                 System.out.println(author.toString());
             }
 
             l = 0;
-            System.out.println("Извлечение из таблици записи по стране происхождения: ");
+            System.out.println("Printing lines from db with citizenship: ");
             for (Author author : authorRepository.findAllByCitizenship("United States of America")){
                 l++;
-                System.out.print("Запись №" + l + ": ");
+                System.out.print("Line №" + l + ": ");
                 System.out.println(author.toString());
             }
+
+            authorRepository.deleteAll();
         }
     }

@@ -5,17 +5,18 @@ import org.springframework.data.annotation.Id;
 import java.io.Serializable;
 
 /**
- * Created by Pigas on 11.05.2017.
+ * Entity class for entity "Author", immutable, has full constructor, overridden method toString();
  */
 public final class Author implements Serializable{
+
     @Id
-    private final int id;                       //ID
-    private final String name;                  //Имя автора
-    private final String surname;               //Фамилия автора
-    private final int yearOfBirth;              //Год рождения
-    private final String citizenship;           //Гражданство
-    private final String biography;             //Краткая биография
-    private final boolean stillAlive;           //Статус - Все еще жив)
+    private final int id;
+    private final String name;
+    private final String surname;
+    private final int yearOfBirth;
+    private final String citizenship;
+    private final String biography;
+    private final boolean stillAlive;
 
     public Author(final int id, final String name, final String surname, final int yearOfBirth,
                   final String citizenship, final String biography, final boolean stillAlive) {
@@ -30,11 +31,9 @@ public final class Author implements Serializable{
 
     @Override
     public String toString() {
-        String author = new String();
-        author = author.concat("id : " + id + ",    name : " + name + ",    surname : " + surname
-                + ",    yearOfBirth : " + yearOfBirth + ",    citizenship : " + citizenship
-                + ",    biography : " + biography + ",    stillAlive : " + stillAlive);
-        return author;
+        return "id : "+id+",    name : "+name+",    surname : "+surname
+                +",    yearOfBirth : "+yearOfBirth+",    citizenship : "+citizenship
+                +",    biography : "+biography+",    stillAlive : "+stillAlive;
     }
 
     public int getId() {

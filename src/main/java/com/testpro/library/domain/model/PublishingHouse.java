@@ -1,15 +1,16 @@
 package com.testpro.library.domain.model;
 
 /**
- * Created by Pigas on 11.05.2017.
+ * Entity class for entity "PublishingHouse", immutable, has full constructor, has n't got overridden method toString();
+ * Is necessary for storing a list of publishinghouse.
  */
 public final class PublishingHouse {
 
-    private final int id;                   //ID
-    private final String name;              //Название издательства
-    private final String address;           //Адрес
-    private final String phone;             //Контактный телефон
-    private final String contact;           //Контактное лицо
+    private final int id;
+    private final String name;
+    private final String address;
+    private final String phone;
+    private final String contact;
 
     public PublishingHouse(final int id, final String name, final String address, final String phone,
                            final String contact) {

@@ -1,27 +1,56 @@
 package com.testpro.library.domain.model;
 
 /**
- * Created by Pigas on 11.05.2017.
+ * Entity class for entity "Jornal", immutable, has full constructor, has n't got overridden method toString();
+ * Is necessary for storing of a book using history.
  */
 public final class Journal {
-    public enum State {inSight, isGiven, isSpoiled, isUnderRestoration, isCommingSoon}         //Перечисление состояний (в наличии, на руках, испорчена, реставрируется, скоро поступит в библиотеку)
 
-    private final long id;                      //ID
-    private final Library forLib;               //Название библиотеки, которой принадлежит журнал
-    private final Book book;                    //Название книги
-    private final String dayTaken;              //Время когда взял на руки
-    private final String dayReturn;             //Время когда вернул на руки
-    private final Reeder reeder;                //Читатель
-    private final State state;                  //Состояние
+    /**
+     * enum determining the state of a book
+     */
+    public enum State {
+        /**
+         * Stored at the library
+         */
+        inSight,
+
+        /**
+         * Reader has taken this book
+         */
+        isGiven,
+
+        /**
+         * Tre book is spoiled and is waiting for reparation
+         */
+        isSpoiled,
+
+        /**
+         * The book is under reparation
+         */
+        isUnderRestoration,
+
+        /**
+         * The book is coming soon to the library
+         */
+        isCommingSoon};
+
+    private final long id;
+    private final Library forLib;
+    private final Book book;
+    private final String dayTaken;
+    private final String dayReturn;
+    private final Reader reader;
+    private final State state;
 
     public Journal(final long id, final Library forLib, final Book book, final String dayTaken,
-                   final String dayReturn, final Reeder reeder, final State state) {
+                   final String dayReturn, final Reader reader, final State state) {
         this.id = id;
         this.forLib = forLib;
         this.book = book;
         this.dayTaken = dayTaken;
         this.dayReturn = dayReturn;
-        this.reeder = reeder;
+        this.reader = reader;
         this.state = state;
     }
 
@@ -45,8 +74,8 @@ public final class Journal {
         return dayReturn;
     }
 
-    public Reeder getReeder() {
-        return reeder;
+    public Reader getReader() {
+        return reader;
     }
 
     public State getState() {
