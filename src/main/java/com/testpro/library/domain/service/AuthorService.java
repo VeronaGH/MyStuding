@@ -3,7 +3,10 @@ package com.testpro.library.domain.service;
 import com.testpro.library.domain.model.Author;
 import com.testpro.library.domain.mongodb.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Test service containing methods initial creating db AuthorRepository and testing asses methods.
@@ -11,8 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthorService {
 
+    private final AuthorRepository authorRepository;
+
     @Autowired
-    private AuthorRepository authorRepository;
+    public AuthorService(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
 
     public void init() {
         authorRepository.deleteAll();
@@ -84,11 +91,10 @@ public class AuthorService {
                 System.out.print("Line №" + l + ": ");
                 System.out.println(author.toString());
             }
-            l = 0;
             System.out.println("Printing lines from db with name 'David': ");
-            for (Author author : authorRepository.findAllByName("David")) {
-                l++;
-                System.out.print("Line №" + l + ": ");
+            final List<Author> namedAuthor = authorRepository.findAllByName("David");
+            for (Author author : namedAuthor) {
+                System.out.print("Line №" + (namedAuthor.indexOf(author) + 1) + ": ");
                 System.out.println(author.toString());
             }
 
