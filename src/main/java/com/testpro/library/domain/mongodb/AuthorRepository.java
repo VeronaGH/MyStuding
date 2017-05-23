@@ -8,9 +8,10 @@ import java.util.List;
 /**
  * The interface containing declarations of asses methods to db of AuthorRepository
  */
-public interface AuthorRepository extends MongoRepository<Author, String>{
+public interface AuthorRepository extends MongoRepository<Author, String> {
     /**
      * Find authors by name
+     *
      * @param name
      * @return List<Author>
      */
@@ -18,6 +19,7 @@ public interface AuthorRepository extends MongoRepository<Author, String>{
 
     /**
      * Find authors by surname
+     *
      * @param surname
      * @return List<Author>
      */
@@ -25,6 +27,7 @@ public interface AuthorRepository extends MongoRepository<Author, String>{
 
     /**
      * Find author by name, surname and year of birth
+     *
      * @param name
      * @param surname
      * @param yearOfBirth
@@ -34,15 +37,17 @@ public interface AuthorRepository extends MongoRepository<Author, String>{
 
     /**
      * Find authors by citizenship
+     *
      * @param citizenship
      * @return List<Author>
      */
-    List<Author> findAllByCitizenship (String citizenship);
+    List<Author> findAllByCitizenship(String citizenship);
 
     /**
      * Find authors by year of birth
+     *
      * @param yearOfBirth
      * @return List<Author>
      */
-    List<Author> findAllByYearOfBirth (int yearOfBirth);
+    List<Author> findAllByYearOfBirth(int yearOfBirth);
 }

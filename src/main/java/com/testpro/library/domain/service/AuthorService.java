@@ -3,7 +3,6 @@ package com.testpro.library.domain.service;
 import com.testpro.library.domain.model.Author;
 import com.testpro.library.domain.mongodb.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -81,53 +80,49 @@ public class AuthorService {
                 true));
 
         System.out.println("Initialisation complete...");
-        }
-
-        public void check(){
-            int l = 0;
-            System.out.println("Printing all data from db");
-            for (Author author : authorRepository.findAll()) {
-                l++;
-                System.out.print("Line №" + l + ": ");
-                System.out.println(author.toString());
-            }
-            System.out.println("Printing lines from db with name 'David': ");
-            final List<Author> namedAuthor = authorRepository.findAllByName("David");
-            for (Author author : namedAuthor) {
-                System.out.print("Line №" + (namedAuthor.indexOf(author) + 1) + ": ");
-                System.out.println(author.toString());
-            }
-
-            l = 0;
-            System.out.println("Printing lines from db with surname 'Fresto': ");
-            for (Author author : authorRepository.findAllBySurname("Fresto")) {
-                l++;
-                System.out.print("Line №" + l + ": ");
-                System.out.println(author.toString());
-            }
-
-            l = 0;
-            System.out.println("Printing lines from db with parameters:" +
-                    " year of birth, name, surname (Omar Haiam, 1000): ");
-            System.out.println(authorRepository.findByNameAndSurnameAndYearOfBirth("Omar",
-                    "Haiam", 1000).toString());
-
-            l = 0;
-            System.out.println("Printing lines from db with year of birth 1985: ");
-            for (Author author : authorRepository.findAllByYearOfBirth(1985)){
-                l++;
-                System.out.print("Line №" + l + ": ");
-                System.out.println(author.toString());
-            }
-
-            l = 0;
-            System.out.println("Printing lines from db with citizenship: ");
-            for (Author author : authorRepository.findAllByCitizenship("United States of America")){
-                l++;
-                System.out.print("Line №" + l + ": ");
-                System.out.println(author.toString());
-            }
-
-            authorRepository.deleteAll();
-        }
     }
+
+    public void check() {
+
+        System.out.println("Printing all data from db");
+        final List<Author> allauthors = authorRepository.findAll();
+        for (Author author : allauthors) {
+            System.out.print("Line №" + allauthors.indexOf(author) + ": ");
+            System.out.println(author.toString());
+        }
+        System.out.println("Printing lines from db with name 'David': ");
+        final List<Author> namedAuthor = authorRepository.findAllByName("David");
+        for (Author author : namedAuthor) {
+            System.out.print("Line №" + (namedAuthor.indexOf(author) + 1) + ": ");
+            System.out.println(author.toString());
+        }
+
+        System.out.println("Printing lines from db with surname 'Fresto': ");
+        final List<Author> surnamedAuthor = authorRepository.findAllBySurname("Fresto");
+        for (Author author : surnamedAuthor) {
+            System.out.print("Line №" + surnamedAuthor.indexOf(author) + ": ");
+            System.out.println(author.toString());
+        }
+
+        System.out.println("Printing lines from db with parameters:" +
+                " year of birth, name, surname (Omar Haiam, 1000): ");
+        System.out.println(authorRepository.findByNameAndSurnameAndYearOfBirth("Omar",
+                "Haiam", 1000).toString());
+
+        System.out.println("Printing lines from db with year of birth 1985: ");
+        final List<Author> birthAuthor = authorRepository.findAllByYearOfBirth(1985);
+        for (Author author : birthAuthor) {
+            System.out.print("Line №" + birthAuthor.indexOf(author) + ": ");
+            System.out.println(author.toString());
+        }
+
+        System.out.println("Printing lines from db with citizenship: ");
+        final List<Author> citizenshipAuthor = authorRepository.findAllByCitizenship("Soviet Republic");
+        for (Author author : citizenshipAuthor) {
+            System.out.print("Line №" + citizenshipAuthor.indexOf(author) + ": ");
+            System.out.println(author.toString());
+        }
+
+        authorRepository.deleteAll();
+    }
+}

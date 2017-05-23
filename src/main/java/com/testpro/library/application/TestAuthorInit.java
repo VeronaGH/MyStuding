@@ -22,7 +22,7 @@ public class TestAuthorInit {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public void init(){
+    public void init() {
         authorService.init();
     }
 }

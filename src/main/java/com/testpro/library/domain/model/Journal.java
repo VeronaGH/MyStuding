@@ -33,7 +33,10 @@ public final class Journal {
         /**
          * The book is coming soon to the library
          */
-        isCommingSoon};
+        isCommingSoon
+    }
+
+    ;
 
     private final long id;
     private final Library forLib;

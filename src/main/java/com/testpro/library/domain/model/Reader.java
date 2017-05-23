@@ -13,18 +13,21 @@ public final class Reader {
          * Everything is normal and reader could take books from the library
          */
         Active,
-         /**
+        /**
          * Something is wrong and reader couldn't take any books from library
          */
         Blocked,
-         /**
+        /**
          * The reader signature is marked as archived
          */
         Delited,
         /**
          * The reader is fined and blocked
          */
-        Fined};
+        Fined
+    }
+
+    ;
 
     private final int id;
     private final String name;

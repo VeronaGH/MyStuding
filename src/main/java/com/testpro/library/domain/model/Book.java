@@ -34,7 +34,10 @@ public final class Book {
         /**
          * The book is coming soon to the library
          */
-        isCommingSoon};
+        isCommingSoon
+    }
+
+    ;
 
     @Id
     private final int id;
@@ -67,15 +70,21 @@ public final class Book {
         return id;
     }
 
-    public Library getLib() {return lib;}
+    public Library getLib() {
+        return lib;
+    }
 
     public String getName() {
         return name;
     }
 
-    public Author getAutor() {return author;}
+    public Author getAutor() {
+        return author;
+    }
 
-    public Genre getGenre() {return genre;}
+    public Genre getGenre() {
+        return genre;
+    }
 
     public String getPublishingHouse() {
         return publishingHouse;
@@ -85,7 +94,9 @@ public final class Book {
         return yearPublish;
     }
 
-    public boolean isBestSeller() {return bestSeller;}
+    public boolean isBestSeller() {
+        return bestSeller;
+    }
 
     public String getDescription() {
         return description;

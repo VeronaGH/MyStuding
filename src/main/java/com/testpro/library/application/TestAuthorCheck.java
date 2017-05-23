@@ -22,7 +22,7 @@ public class TestAuthorCheck {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public void check(){
+    public void check() {
         authorService.check();
     }
 }

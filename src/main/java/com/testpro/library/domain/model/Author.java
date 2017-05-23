@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Entity class for entity "Author", immutable, has full constructor, overridden method toString();
  */
-public final class Author implements Serializable{
+public final class Author implements Serializable {
 
     @Id
     private final int id;
@@ -31,10 +31,11 @@ public final class Author implements Serializable{
 
     @Override
     public String toString() {
-        return "id : "+id+",    name : "+name+",    surname : "+surname
-                +",    yearOfBirth : "+yearOfBirth+",    citizenship : "+citizenship
-                +",    biography : "+biography+",    stillAlive : "+stillAlive;
+        return "id : " + id + ",    name : " + name + ",    surname : " + surname
+                + ",    yearOfBirth : " + yearOfBirth + ",    citizenship : " + citizenship
+                + ",    biography : " + biography + ",    stillAlive : " + stillAlive;
     }
+
 
     public int getId() {
         return id;
