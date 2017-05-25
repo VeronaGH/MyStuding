@@ -23,6 +23,7 @@ public class TestAuthorCheck {
 
     @RequestMapping(method = RequestMethod.GET)
     public void check() {
+        System.out.println("Check method started...");
         authorService.check();
     }
 }

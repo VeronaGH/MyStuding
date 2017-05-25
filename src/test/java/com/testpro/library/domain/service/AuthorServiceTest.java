@@ -2,9 +2,15 @@ package com.testpro.library.domain.service;
 
 import com.testpro.library.domain.model.Author;
 import com.testpro.library.domain.mongodb.AuthorRepository;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -12,20 +18,19 @@ import static org.mockito.Mockito.*;
 /**
  * Created by Pigas on 22.05.2017.
  */
-public class AuthorServiceInitTest {
+@RunWith(MockitoJUnitRunner.class)
+public class AuthorServiceTest {
 
-    @Test
-    public void initTest() throws Exception {
-        AuthorRepository authorRepository = mock(AuthorRepository.class);
-        doNothing().when(authorRepository).deleteAll();
-        doReturn(null).when(authorRepository).save(any(Author.class));
-        AuthorService authorService = new AuthorService(authorRepository);
-        authorService.init();
-    }
+    @Mock
+    protected AuthorRepository authorRepository;
 
-    @Test
-    public void checkTest() throws Exception {
-        List<Author> author = new ArrayList<Author>();
+    @InjectMocks
+    protected AuthorService authorService;
+
+    static List<Author> author = new ArrayList<Author>();
+
+    @BeforeClass
+    public static void setUp() {
         author.add(new Author(1,
                 "Paul",
                 "Jenkins",
@@ -81,17 +86,26 @@ public class AuthorServiceInitTest {
                 "New Zeland",
                 "A brother of a quiet boy from a remote province",
                 true));
+    }
 
-        AuthorRepository authorRepository = mock(AuthorRepository.class);
+    @Test
+    public void initTest() throws Exception {
+
+        doNothing().when(authorRepository).deleteAll();
+        doReturn(null).when(authorRepository).save(any(Author.class));
+        authorService.init();
+    }
+
+    @Test
+    public void checkTest() throws Exception {
         doReturn(author).when(authorRepository).findAll();
-        doReturn(author.subList(2, 3)).when(authorRepository).findAllByName("David");
-        doReturn(author.subList(5, 7)).when(authorRepository).findAllBySurname("Fresto");
+        doReturn(Arrays.asList(author.get(2), author.get(5))).when(authorRepository).findAllByName("David");
+        doReturn(Arrays.asList(author.get(5), author.get(6))).when(authorRepository).findAllBySurname("Fresto");
         doReturn(author.get(4)).when(authorRepository).findByNameAndSurnameAndYearOfBirth("Omar",
                 "Haiam", 1000);
-        doReturn(author.subList(5, 6)).when(authorRepository).findAllByYearOfBirth(1985);
-        doReturn(author.subList(3, 4)).when(authorRepository).findAllByCitizenship("Soviet Republic");
+        doReturn(Arrays.asList(author.get(0), author.get(5))).when(authorRepository).findAllByYearOfBirth(1985);
+        doReturn(Arrays.asList(author.get(3))).when(authorRepository).findAllByCitizenship("Soviet Republic");
         doNothing().when(authorRepository).deleteAll();
-        AuthorService authorService = new AuthorService(authorRepository);
         authorService.check();
     }
 }

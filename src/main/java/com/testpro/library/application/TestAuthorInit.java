@@ -23,6 +23,7 @@ public class TestAuthorInit {
 
     @RequestMapping(method = RequestMethod.GET)
     public void init() {
+        System.out.println("Init method started...");
         authorService.init();
     }
 }
