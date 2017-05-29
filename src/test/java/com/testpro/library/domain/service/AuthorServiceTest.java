@@ -94,6 +94,8 @@ public class AuthorServiceTest {
         doNothing().when(authorRepository).deleteAll();
         doReturn(null).when(authorRepository).save(any(Author.class));
         authorService.init();
+        verify(authorRepository, atLeastOnce()).deleteAll();
+        verify(authorRepository, atLeast(7)).save(any(Author.class));
     }
 
     @Test
@@ -107,5 +109,12 @@ public class AuthorServiceTest {
         doReturn(Arrays.asList(author.get(3))).when(authorRepository).findAllByCitizenship("Soviet Republic");
         doNothing().when(authorRepository).deleteAll();
         authorService.check();
+        verify(authorRepository, atLeastOnce()).findAll();
+        verify(authorRepository, atLeastOnce()).findAllByName("David");
+        verify(authorRepository, atLeastOnce()).findAllBySurname("Fresto");
+        verify(authorRepository, atLeastOnce()).findByNameAndSurnameAndYearOfBirth("Omar",
+                "Haiam", 1000);
+        verify(authorRepository, atLeastOnce()).findAllByYearOfBirth(1985);
+        verify(authorRepository, atLeastOnce()).findAllByCitizenship("Soviet Republic");
     }
 }
