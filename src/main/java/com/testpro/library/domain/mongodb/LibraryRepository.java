@@ -33,7 +33,7 @@ public interface LibraryRepository extends MongoRepository<Library, String> {
      * @param Address
      * @return List<Library>
      */
-    List<Library> deleteAllByNameAndAddress(String name, String Address);
+    List<Library> deleteByNameAndAddress(String name, String Address);
 
     /**
      * Find all Libraries by their name and address

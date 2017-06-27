@@ -12,7 +12,7 @@ public interface AuthorRepository extends MongoRepository<Author, String> {
     /**
      * Find authors by name
      *
-     * @param name
+     * @param name String
      * @return List<Author>
      */
     List<Author> findAllByName(String name);
@@ -20,34 +20,72 @@ public interface AuthorRepository extends MongoRepository<Author, String> {
     /**
      * Find authors by surname
      *
-     * @param surname
+     * @param surname String
      * @return List<Author>
      */
     List<Author> findAllBySurname(String surname);
 
     /**
-     * Find author by name, surname and year of birth
+     * Find authors by year of birth
      *
-     * @param name
-     * @param surname
-     * @param yearOfBirth
-     * @return Author
+     * @param yearOfBirth int
+     * @return List<Author>
      */
-    Author findByNameAndSurnameAndYearOfBirth(String name, String surname, int yearOfBirth);
+    List<Author> findAllByYearOfBirth(int yearOfBirth);
 
     /**
      * Find authors by citizenship
      *
-     * @param citizenship
+     * @param citizenship String
      * @return List<Author>
      */
     List<Author> findAllByCitizenship(String citizenship);
 
     /**
-     * Find authors by year of birth
+     * Find author by name and surname
      *
-     * @param yearOfBirth
+     * @param name    String
+     * @param surname String
      * @return List<Author>
      */
-    List<Author> findAllByYearOfBirth(int yearOfBirth);
+    List<Author> findAllByNameAndSurname(String name, String surname);
+
+    /**
+     * Find author by name, surname and year of birth
+     *
+     * @param name        String
+     * @param surname     String
+     * @param yearOfBirth int
+     * @return Author
+     */
+    List<Author> findAllByNameAndSurnameAndYearOfBirth(String name, String surname, int yearOfBirth);
+
+    /**
+     * Find author by name or surname
+     *
+     * @param name    String
+     * @param surname String
+     * @return List<Author>
+     */
+    List<Author> findAllByNameOrSurname(String name, String surname);
+
+    /**
+     * Find author by name or surname or year of birth
+     *
+     * @param name        String
+     * @param surname     String
+     * @param yearOfBirth int
+     * @return List<Author>
+     */
+    List<Author> findAllByNameOrSurnameOrYearOfBirth(String name, String surname, int yearOfBirth);
+
+    /**
+     * Delete all authors by name, surname and yearOfBirth
+     *
+     * @param name        String
+     * @param surname     String
+     * @param yearOfBirth int
+     * @return List<Author>
+     */
+    List<Author> deleteAllByNameAndSurnameAndYearOfBirth(String name, String surname, int yearOfBirth);
 }

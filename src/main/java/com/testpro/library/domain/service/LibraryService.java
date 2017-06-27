@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by Pigas on 31.05.2017.
+ * The class is served for saving, updating, deleting and looking up throw the Library DB
  */
 @Service
 public class LibraryService {
@@ -20,23 +20,52 @@ public class LibraryService {
         this.libraryRepository = libraryRepository;
     }
 
-
+    /**
+     * Save method
+     *
+     * @param library class
+     * @return library
+     */
     public Library saveLibrary(Library library) {
         return libraryRepository.save(library);
     }
 
+    /**
+     * Delete method
+     *
+     * @param library class
+     * @return List<Library>
+     */
     public List<Library> deleteLibrary(Library library) {
-        return libraryRepository.deleteAllByNameAndAddress(library.getName(), library.getAddress());
+        return libraryRepository.deleteByNameAndAddress(library.getName(), library.getAddress());
     }
 
-    public List<Library> reedLibrary() {
+    /**
+     * Find all entity
+     *
+     * @return List<Library>
+     */
+    public List<Library> readLibrary() {
         return libraryRepository.findAll();
     }
 
+    /**
+     * Find entity by its name or address
+     *
+     * @param library class
+     * @return List<Library>
+     */
     public List<Library> findLibraryByNameOrAdress(Library library) {
         return libraryRepository.findAllByNameOrAddress(library.getName(), library.getAddress());
     }
 
+    /**
+     * Find libraries by theirs name, if found only one - refresh entity at the DB, in other case - return all entity
+     * witch has found
+     *
+     * @param library class
+     * @return List<Library>
+     */
     public List<Library> updateLibrary(Library library) {
         List<Library> updatingLibrary;
         updatingLibrary = libraryRepository.findAllByName(library.getName());
@@ -46,6 +75,7 @@ public class LibraryService {
                     library.getName(),
                     library.getAddress(),
                     library.getQuantityWorkers()));
+            return libraryRepository.findAllByName(library.getName());
         }
         return updatingLibrary;
     }

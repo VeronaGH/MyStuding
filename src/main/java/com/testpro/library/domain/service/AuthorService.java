@@ -4,15 +4,16 @@ import com.testpro.library.domain.model.Author;
 import com.testpro.library.domain.mongodb.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Test service containing methods initial creating db AuthorRepository and testing asses methods.
+ * The class is served for saving, updating, deleting and looking up throw the Author DB
  */
 @Service
 public class AuthorService {
-
     private final AuthorRepository authorRepository;
 
     @Autowired
@@ -20,109 +21,106 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public void init() {
-        authorRepository.deleteAll();
-
-        authorRepository.save(new Author(1,
-                "Paul",
-                "Jenkins",
-                1985,
-                "United States of America",
-                "Long, long, long story with happy end...",
-                true));
-
-        authorRepository.save(new Author(2,
-                "Luke",
-                "Mirigam",
-                1961,
-                "United States of America",
-                "Long, long, long story without pappy end...",
-                false));
-
-        authorRepository.save(new Author(3,
-                "David",
-                "Ferko",
-                1955,
-                "United Kingdom of Grate Britain",
-                "Middle hand novel autor.",
-                false));
-
-        authorRepository.save(new Author(4,
-                "Mihail",
-                "Veller",
-                1967,
-                "Soviet Republic",
-                "Genius author of soviet prose",
-                true));
-
-        authorRepository.save(new Author(5,
-                "Omar",
-                "Haiam",
-                1000,
-                "Arabian East",
-                "Genius ancient Arabic author",
-                false));
-
-        authorRepository.save(new Author(6,
-                "David",
-                "Fresto",
-                1985,
-                "New Zeland",
-                "Quiet boy from a remote province",
-                true));
-
-        authorRepository.save(new Author(7,
-                "Mishel",
-                "Fresto",
-                1980,
-                "New Zeland",
-                "A brother of a quiet boy from a remote province",
-                true));
-
-        System.out.println("Initialisation complete...");
+    /**
+     * Save method
+     *
+     * @param author class
+     * @return library
+     */
+    public Author saveAuthor(Author author) {
+        return authorRepository.save(author);
     }
 
-    public void check() {
-
-        System.out.println("Printing all data from db");
-        final List<Author> allauthors = authorRepository.findAll();
-        for (Author author : allauthors) {
-            System.out.print("Line №" + allauthors.indexOf(author) + ": ");
-            System.out.println(author.toString());
-        }
-        System.out.println("Printing lines from db with name 'David': ");
-        final List<Author> namedAuthor = authorRepository.findAllByName("David");
-        for (Author author : namedAuthor) {
-            System.out.print("Line №" + (namedAuthor.indexOf(author) + 1) + ": ");
-            System.out.println(author.toString());
-        }
-
-        System.out.println("Printing lines from db with surname 'Fresto': ");
-        final List<Author> surnamedAuthor = authorRepository.findAllBySurname("Fresto");
-        for (Author author : surnamedAuthor) {
-            System.out.print("Line №" + surnamedAuthor.indexOf(author) + ": ");
-            System.out.println(author.toString());
-        }
-
-        System.out.println("Printing lines from db with parameters:" +
-                " year of birth, name, surname (Omar Haiam, 1000): ");
-        System.out.println(authorRepository.findByNameAndSurnameAndYearOfBirth("Omar",
-                "Haiam", 1000).toString());
-
-        System.out.println("Printing lines from db with year of birth 1985: ");
-        final List<Author> birthAuthor = authorRepository.findAllByYearOfBirth(1985);
-        for (Author author : birthAuthor) {
-            System.out.print("Line №" + birthAuthor.indexOf(author) + ": ");
-            System.out.println(author.toString());
-        }
-
-        System.out.println("Printing lines from db with citizenship: ");
-        final List<Author> citizenshipAuthor = authorRepository.findAllByCitizenship("Soviet Republic");
-        for (Author author : citizenshipAuthor) {
-            System.out.print("Line №" + citizenshipAuthor.indexOf(author) + ": ");
-            System.out.println(author.toString());
-        }
-
-        authorRepository.deleteAll();
+    /**
+     * Delete all entity witch contain name, surname and year of birth.
+     *
+     * @param author class
+     * @return List<Author>
+     */
+    public List<Author> deleteAuthor(Author author) {
+        return authorRepository.deleteAllByNameAndSurnameAndYearOfBirth(
+                author.getName(),
+                author.getSurname(),
+                author.getYearOfBirth());
     }
+
+    /**
+     * This method look thro the Author DB and try to find list of entity by parameters:
+     * name, surname, yearOfBirth. In case not sufficient data for search try to drop some parameters, and so on...
+     *
+     * @param author class
+     * @return List<Author>
+     */
+    public List<Author> findAuthor(Author author) {
+        List<Author> authorList;
+        if (!StringUtils.isEmpty(author.getName()) & (!StringUtils.isEmpty(author.getSurname())) & !(author.getYearOfBirth() == 0)) {
+            authorList = authorRepository.findAllByNameAndSurnameAndYearOfBirth(
+                    author.getName(),
+                    author.getSurname(),
+                    author.getYearOfBirth());
+            if (authorList.isEmpty()) {
+                authorList = authorRepository.findAllByNameOrSurnameOrYearOfBirth(
+                        author.getName(),
+                        author.getSurname(),
+                        author.getYearOfBirth());
+            }
+            return authorList;
+        }
+        if (!StringUtils.isEmpty(author.getName()) & (!StringUtils.isEmpty(author.getSurname()))) {
+            authorList = authorRepository.findAllByNameAndSurname(
+                    author.getName(),
+                    author.getSurname());
+            if (authorList.isEmpty()) {
+                authorList = authorRepository.findAllByNameOrSurname(
+                        author.getName(),
+                        author.getSurname());
+            }
+            return authorList;
+        }
+        if (!StringUtils.isEmpty(author.getSurname())) {
+            authorList = authorRepository.findAllBySurname(author.getSurname());
+            return authorList;
+        }
+        if (!StringUtils.isEmpty(author.getName())) {
+            authorList = authorRepository.findAllByName(author.getName());
+            return authorList;
+        }
+        if (!(author.getYearOfBirth() == 0)) {
+            authorList = authorRepository.findAllByYearOfBirth(author.getYearOfBirth());
+            return authorList;
+        }
+        if (!StringUtils.isEmpty(author.getCitizenship())) {
+            authorList = authorRepository.findAllByCitizenship(author.getCitizenship());
+            return authorList;
+        }
+        return authorRepository.findAll();
+    }
+
+    /**
+     * This method look thro the Author DB and try to find single entity by name, surname and yearOfbirth
+     * if find - change other params
+     *
+     * @param author class
+     * @return List<Author>
+     */
+    public List<Author> updateAuthor(Author author) {
+        List<Author> authorList = authorRepository.findAllByNameAndSurnameAndYearOfBirth(
+                author.getName(),
+                author.getSurname(),
+                author.getYearOfBirth());
+        if (authorList.size() == 1) {
+            List<Author> authors = new ArrayList<Author>();
+            authors.add(authorRepository.save( new Author(
+                    authorList.get(0).getId(),
+                    authorList.get(0).getName(),
+                    authorList.get(0).getSurname(),
+                    authorList.get(0).getYearOfBirth(),
+                    author.getCitizenship(),
+                    author.getBiography(),
+                    author.isStillAlive())));
+            return authors;
+        }
+        return authorList;
+    }
+
 }

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 /**
- * Created by Pigas on 31.05.2017.
+ * Jackson configuration file
  */
 @Configuration
 public class JacksonConfig {

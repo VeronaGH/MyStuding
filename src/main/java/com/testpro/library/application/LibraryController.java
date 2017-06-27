@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 /**
@@ -21,7 +24,7 @@ public class LibraryController {
     private LibraryService libraryService;
     private IdService idService;
 
-    Library library;
+    public Library library;
 
     @Autowired
     public LibraryController(LibraryService libraryService, IdService idService) {
@@ -32,87 +35,75 @@ public class LibraryController {
     /**
      * Save method of controller, asses method 'POST'
      *
-     * @param libraryDTO
+     * @param libraryDTO class
      * @return libraryDTO
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity storeLibrary(@RequestBody final LibraryDTO libraryDTO) {
-
-        library = libraryService.saveLibrary(new Library(
-                idService.incIdLibrary(),
-                libraryDTO.getName(),
-                libraryDTO.getAddress(),
-                libraryDTO.getQuantityWorkers()));
-
-        return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(
-                new LibraryDTO(
-                        library.getName(),
-                        library.getAddress(),
-                        library.getQuantityWorkers()));
+        if ((libraryDTO.getName() != null) && (libraryDTO.getAddress() != null)) {
+            library = libraryService.saveLibrary(new Library(
+                    idService.incIdLibrary(),
+                    libraryDTO.getName(),
+                    libraryDTO.getAddress(),
+                    libraryDTO.getQuantityWorkers()));
+            return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(
+                    new LibraryDTO().convertToLibraryDTO(library));
+        }
+        return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).contentType(MediaType.APPLICATION_JSON).body(libraryDTO);
     }
 
     /**
      * This method delete all documents which contains incoming  name and address
      *
-     * @param libraryDTO
-     * @return List<Library>
+     * @param libraryDTO class
+     * @return List<LibraryDTO>
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity deleteLibrary(@RequestBody final LibraryDTO libraryDTO) {
-
+        List<Library> delList = libraryService.deleteLibrary(new Library(
+                0,
+                libraryDTO.getName(),
+                libraryDTO.getAddress(),
+                libraryDTO.getQuantityWorkers()));
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                libraryService.deleteLibrary(new Library(
-                        0,
-                        libraryDTO.getName(),
-                        libraryDTO.getAddress(),
-                        libraryDTO.getQuantityWorkers())));
+                new LibraryDTO().convertToLibraryDTOMap(delList));
     }
 
     /**
-     * This method return all documents at the library with asses method 'GET'
+     * This method return all documents which contains appropriate name or address or return all
+     * documents, if parameters not defined.
      *
-     * @return List<Library>
+     * @return List<LibraryDTO>
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity readLibrary() {
+    public ResponseEntity searchLibrary(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "address", required = false) String address) {
+        List<Library> libraryList;
+        if (StringUtils.isEmpty(name) && StringUtils.isEmpty(address)) {
+            libraryList = libraryService.readLibrary();
+        } else {
+            libraryList = libraryService.findLibraryByNameOrAdress(new Library(0, name, address, 0));
+        }
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                libraryService.reedLibrary());
+                new LibraryDTO().convertToLibraryDTOMap(libraryList));
     }
 
+
     /**
-     * This method return all documents which contains appropriate name or address
+     * This method updates appropriate entity in DB if find single entity by name, else returns the list of entity
      *
-     * @param libraryDTO
-     * @return
+     * @param libraryDTO class
+     * @return List<LibraryDTO>
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity searchLibrary(@RequestBody final LibraryDTO libraryDTO) {
+    public ResponseEntity updateLibrary(@RequestBody final LibraryDTO libraryDTO) {
+        List<Library> libraryList = libraryService.updateLibrary(new LibraryDTO().convertToLibrary(libraryDTO));
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                libraryService.findLibraryByNameOrAdress(new Library(
-                        0,
-                        libraryDTO.getName(),
-                        libraryDTO.getAddress(),
-                        libraryDTO.getQuantityWorkers())));
-    }
-
-
-    /**
-     * Thise method updates appropriate entity in DB if find single entity by name, else returns the list of entity
-     * @param libraryDTO
-     * @return
-     */
-    @ResponseBody
-    @RequestMapping(method = RequestMethod.PATCH)
-    public ResponseEntity updateLibrary(@RequestBody final LibraryDTO libraryDTO){
-        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                libraryService.updateLibrary(new Library(
-                        0,
-                        libraryDTO.getName(),
-                        libraryDTO.getAddress(),
-                        libraryDTO.getQuantityWorkers())));
+                new LibraryDTO().convertToLibraryDTOMap(libraryList));
     }
 }
