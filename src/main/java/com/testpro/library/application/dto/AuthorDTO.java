@@ -39,7 +39,7 @@ public class AuthorDTO implements Serializable {
     public AuthorDTO(){
     }
 
-    public AuthorDTO(String name, String surname, int yearOfBirth, String citizenship, String biography, boolean stillAlive) {
+    private AuthorDTO(String name, String surname, int yearOfBirth, String citizenship, String biography, boolean stillAlive) {
         this.name = name;
         this.surname = surname;
         this.yearOfBirth = yearOfBirth;
@@ -106,39 +106,20 @@ public class AuthorDTO implements Serializable {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
     public int getYearOfBirth() {
         return yearOfBirth;
-    }
-
-    public void setYearOfBirth(int yearOfBirth) {
-        this.yearOfBirth = yearOfBirth;
     }
 
     public String getCitizenship() {
         return citizenship;
     }
 
-    public void setCitizenship(String citizenship) {
-        this.citizenship = citizenship;
-    }
-
     public String getBiography() {
         return biography;
-    }
-
-    public void setBiography(String biography) {
-        this.biography = biography;
     }
 
     public boolean isStillAlive() {
         return stillAlive;
     }
 
-    public void setStillAlive(boolean stillAlive) {
-        this.stillAlive = stillAlive;
-    }
 }

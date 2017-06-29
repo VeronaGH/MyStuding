@@ -1,10 +1,13 @@
 package com.testpro.library.domain.model;
 
+import org.springframework.data.annotation.Id;
+
 /**
  * Entity class for entity "Genre", immutable, has full constructor, has n't got overridden method toString();
  */
 public final class Genre {
 
+    @Id
     private final int id;
     private final String name;
     private final String description;

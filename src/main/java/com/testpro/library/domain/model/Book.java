@@ -37,8 +37,6 @@ public final class Book {
         isCommingSoon
     }
 
-    ;
-
     @Id
     private final int id;
     private final Library lib;

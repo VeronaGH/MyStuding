@@ -3,7 +3,7 @@ package com.testpro.library.domain.model;
 import org.springframework.data.annotation.Id;
 
 /**
- * Created by Pigas on 31.05.2017.
+ * Service for DB serving
  */
 public class IdKey {
 

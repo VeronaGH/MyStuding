@@ -1,6 +1,5 @@
 package com.testpro.library.domain.model;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
 
 import java.io.Serializable;

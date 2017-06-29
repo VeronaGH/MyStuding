@@ -18,15 +18,13 @@ public class IdService {
         this.idRepository = idRepository;
     }
 
-    public boolean init() {
+    private void init() {
         if (idRepository.findById(1) == null) {
             idRepository.save(new IdKey(0, 0, 0, 0, 0, 0, 0));
-            return true;
         }
-        return false;
     }
 
-    public IdKey getIdKey() {
+    private IdKey getIdKey() {
         init();
         return idRepository.findById(1);
     }
@@ -109,7 +107,7 @@ public class IdService {
         return (idKey.getIdPublishingHouse() + 1);
     }
 
-    public int incIdReeder() {
+    public int incIdReader() {
         IdKey idKey = getIdKey();
         idRepository.save(new IdKey(
                 idKey.getIdAuthor(),

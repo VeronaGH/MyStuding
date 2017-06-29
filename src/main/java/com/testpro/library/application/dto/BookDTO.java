@@ -8,15 +8,16 @@ import com.testpro.library.domain.model.Library;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Data transfer object class for parsing incoming data for BookController
  */
-public class BookDTO {
+public class BookDTO implements Serializable{
 
-    public BookDTO(Library lib, String name, Author author, Genre genre, String publishingHouse, int yearPublish, boolean bestSeller, String description, Book.State state) {
+    private BookDTO(Library lib, String name, Author author, Genre genre, String publishingHouse, int yearPublish, boolean bestSeller, String description, Book.State state) {
         this.lib = lib;
         this.name = name;
         this.author = author;

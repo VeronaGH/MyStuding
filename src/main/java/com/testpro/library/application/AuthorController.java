@@ -7,7 +7,6 @@ import com.testpro.library.domain.service.IdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +23,6 @@ public class AuthorController {
     private AuthorService authorService;
     private IdService idService;
 
-    Author author;
-
     @Autowired
     public AuthorController(AuthorService authorService, IdService idService) {
         this.authorService = authorService;
@@ -40,7 +37,7 @@ public class AuthorController {
     @ResponseBody
     public ResponseEntity storeAuthor(@RequestBody final AuthorDTO authorDTO) {
         if (authorDTO.getName() != null && authorDTO.getSurname() != null && authorDTO.getYearOfBirth() != 0) {
-            author = authorService.saveAuthor(new Author(
+            Author author = authorService.saveAuthor(new Author(
                     idService.incIdAuthor(),
                     authorDTO.getName(),
                     authorDTO.getSurname(),
@@ -60,7 +57,7 @@ public class AuthorController {
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.DELETE)
-    public ResponseEntity deleteAuthor(@RequestBody AuthorDTO authorDTO) {
+    public ResponseEntity deleteAuthor(@RequestBody final AuthorDTO authorDTO) {
         List<Author> authorList = authorService.deleteAuthor(new AuthorDTO().convertToAuthor(authorDTO));
         List<AuthorDTO> authorDTOList = new AuthorDTO().convertToAuthorDTOList(authorList);
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(authorDTOList);
@@ -82,7 +79,7 @@ public class AuthorController {
         if (yearOfBirth == null) {
             yearOfBirth = "0";
         }
-        if (stillAlive != "true") {
+        if (!stillAlive.equals("true")) {
             stillAlive = "false";
         }
         List<Author> authorList = authorService.findAuthor(new Author(
@@ -98,12 +95,12 @@ public class AuthorController {
     }
 
     /**
-     * Thise method updates appropriate entity in DB if find single entity by name, surname and yearOfBirth
+     * This method updates appropriate entity in DB if find single entity by name, surname and yearOfBirth
      * else returns the list of entity
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity updateAuthor(@RequestBody AuthorDTO authorDTO) {
+    public ResponseEntity updateAuthor(@RequestBody final AuthorDTO authorDTO) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
                 new AuthorDTO().convertToAuthorDTOList(authorService.updateAuthor(
                         new AuthorDTO().convertToAuthor(authorDTO))));
