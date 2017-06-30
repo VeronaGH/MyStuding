@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +27,15 @@ public class AuthorService {
      * @return library
      */
     public Author saveAuthor(Author author) {
-        return authorRepository.save(author);
+        Author savingAuthor = authorRepository.findOneByNameAndSurnameAndYearOfBirth(
+                author.getName(),
+                author.getSurname(),
+                author.getYearOfBirth());
+        if (savingAuthor == null) {
+            return authorRepository.save(author);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -37,11 +44,15 @@ public class AuthorService {
      * @param author class
      * @return List<Author>
      */
-    public List<Author> deleteAuthor(Author author) {
-        return authorRepository.deleteAllByNameAndSurnameAndYearOfBirth(
+    public Author deleteAuthor(Author author) {
+        List<Author> deletingAuthor = authorRepository.deleteByNameAndSurnameAndYearOfBirth(
                 author.getName(),
                 author.getSurname(),
                 author.getYearOfBirth());
+        if (!deletingAuthor.isEmpty()) {
+            return deletingAuthor.get(0);
+        }
+        return null;
     }
 
     /**
@@ -53,7 +64,7 @@ public class AuthorService {
      */
     public List<Author> findAuthor(Author author) {
         List<Author> authorList;
-        if (!StringUtils.isEmpty(author.getName()) & (!StringUtils.isEmpty(author.getSurname())) & !(author.getYearOfBirth() == 0)) {
+        if (!StringUtils.isEmpty(author.getName()) && (!StringUtils.isEmpty(author.getSurname())) && !(author.getYearOfBirth() == 0)) {
             authorList = authorRepository.findAllByNameAndSurnameAndYearOfBirth(
                     author.getName(),
                     author.getSurname(),
@@ -66,7 +77,7 @@ public class AuthorService {
             }
             return authorList;
         }
-        if (!StringUtils.isEmpty(author.getName()) & (!StringUtils.isEmpty(author.getSurname()))) {
+        if (!StringUtils.isEmpty(author.getName()) && (!StringUtils.isEmpty(author.getSurname()))) {
             authorList = authorRepository.findAllByNameAndSurname(
                     author.getName(),
                     author.getSurname());
@@ -103,24 +114,22 @@ public class AuthorService {
      * @param author class
      * @return List<Author>
      */
-    public List<Author> updateAuthor(Author author) {
-        List<Author> authorList = authorRepository.findAllByNameAndSurnameAndYearOfBirth(
+    public Author updateAuthor(Author author) {
+        Author updateAuthor = authorRepository.findOneByNameAndSurnameAndYearOfBirth(
                 author.getName(),
                 author.getSurname(),
                 author.getYearOfBirth());
-        if (authorList.size() == 1) {
-            List<Author> authors = new ArrayList<Author>();
-            authors.add(authorRepository.save( new Author(
-                    authorList.get(0).getId(),
-                    authorList.get(0).getName(),
-                    authorList.get(0).getSurname(),
-                    authorList.get(0).getYearOfBirth(),
+        if (updateAuthor != null) {
+            return authorRepository.save(new Author(
+                    updateAuthor.getId(),
+                    author.getName(),
+                    author.getSurname(),
+                    author.getYearOfBirth(),
                     author.getCitizenship(),
                     author.getBiography(),
-                    author.isStillAlive())));
-            return authors;
+                    author.isStillAlive()));
         }
-        return authorList;
+        return null;
     }
 
 }

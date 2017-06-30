@@ -30,10 +30,10 @@ public class PublishingHouseService {
         PublishingHouse existPublishingHouse = publishingHouseRepository.findByNameAndAddress(
                 publishingHouse.getName(),
                 publishingHouse.getAddress());
-        if (existPublishingHouse != null) {
-            return existPublishingHouse;
+        if (existPublishingHouse == null) {
+            return publishingHouseRepository.save(publishingHouse);
         }
-        return publishingHouseRepository.save(publishingHouse);
+        return null;
     }
 
     /**

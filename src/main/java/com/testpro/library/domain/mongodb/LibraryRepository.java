@@ -13,24 +13,25 @@ public interface LibraryRepository extends MongoRepository<Library, String> {
     /**
      * Find library by name
      *
-     * @param name
+     * @param name String
      * @return List<Library>
      */
     List<Library> findAllByName(String name);
 
     /**
-     * Find library by address
+     * Find library by name and address
      *
-     * @param address
+     * @param address String
+     * @param name String
      * @return List<Library>
      */
-    List<Library> findAllByAddress(String address);
+    List<Library> findAllByNameAndAddress(String name,String address);
 
     /**
      * Delete all documents by name of library and address
      *
-     * @param name
-     * @param Address
+     * @param name String
+     * @param Address string
      * @return List<Library>
      */
     List<Library> deleteByNameAndAddress(String name, String Address);
@@ -38,8 +39,8 @@ public interface LibraryRepository extends MongoRepository<Library, String> {
     /**
      * Find all Libraries by their name and address
      *
-     * @param name
-     * @param address
+     * @param name String
+     * @param address String
      * @return List<Library>
      */
     List<Library> findAllByNameOrAddress(String name, String address);

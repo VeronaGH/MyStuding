@@ -14,29 +14,30 @@ import java.util.List;
  */
 public class AuthorDTO implements Serializable {
 
-    @JsonProperty
+    @JsonProperty(value = "name")
     @NotBlank
-    @Size(max = 25)
+    @Size(max = 25, min = 2)
     private String name;
 
-    @JsonProperty
+    @JsonProperty(value = "surname")
     @NotBlank
     @Size(max = 25)
     private String surname;
 
-    @JsonProperty
+    @JsonProperty(value = "yearOfBirth")
+    @NotBlank
     private int yearOfBirth;
 
-    @JsonProperty
+    @JsonProperty(value = "citizenship")
     private String citizenship;
 
-    @JsonProperty
+    @JsonProperty(value = "biography")
     private String biography;
 
-    @JsonProperty
+    @JsonProperty(value = "stillAlive")
     private boolean stillAlive;
 
-    public AuthorDTO(){
+    public AuthorDTO() {
     }
 
     private AuthorDTO(String name, String surname, int yearOfBirth, String citizenship, String biography, boolean stillAlive) {
@@ -55,6 +56,9 @@ public class AuthorDTO implements Serializable {
      * @return AuthorDTO
      */
     public AuthorDTO convertToAuthorDTO(Author author) {
+        if (author == null) {
+            return null;
+        }
         return new AuthorDTO(
                 author.getName(),
                 author.getSurname(),
@@ -67,22 +71,22 @@ public class AuthorDTO implements Serializable {
     /**
      * Convert  AuthorDTO object to Author object
      *
-     * @param authorDTO AuthorDTO
      * @return Author
      */
-    public Author convertToAuthor(AuthorDTO authorDTO) {
+    public Author convertToAuthor() {
         return new Author(
                 0,
-                authorDTO.getName(),
-                authorDTO.getSurname(),
-                authorDTO.getYearOfBirth(),
-                authorDTO.getCitizenship(),
-                authorDTO.getBiography(),
-                authorDTO.isStillAlive());
+                this.name,
+                this.surname,
+                this.yearOfBirth,
+                this.citizenship,
+                this.biography,
+                this.stillAlive);
     }
 
     /**
      * Convert  List<Author> object to List<AuthorDTO> object
+     *
      * @param authorList List<Author>
      * @return List<AuthorDTO>
      */

@@ -38,7 +38,7 @@ public class BookController {
     public ResponseEntity storeBook(@RequestBody final BookDTO bookDTO) {
         if ((bookDTO.getLib() != null) & (bookDTO.getAuthor() != null) & (bookDTO.getName() != null) & (bookDTO.getYearPublish() != 0)) {
             return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(
-                    new BookDTO().convertToBookDTO(bookService.storeBook(new BookDTO().convertToBook(bookDTO))));
+                    new BookDTO().convertToBookDTO(bookService.storeBook(bookDTO.convertToBook())));
         } else return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).contentType(MediaType.APPLICATION_JSON).body(bookDTO);
     }
 

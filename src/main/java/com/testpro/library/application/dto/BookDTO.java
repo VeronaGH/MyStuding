@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Data transfer object class for parsing incoming data for BookController
  */
-public class BookDTO implements Serializable{
+public class BookDTO implements Serializable {
 
     private BookDTO(Library lib, String name, Author author, Genre genre, String publishingHouse, int yearPublish, boolean bestSeller, String description, Book.State state) {
         this.lib = lib;
@@ -35,22 +35,21 @@ public class BookDTO implements Serializable{
     /**
      * Convert  BookDTO object to Book object
      *
-     * @param bookDTO BookDTO
      * @return Book
      */
-    public Book convertToBook(BookDTO bookDTO) {
+    public Book convertToBook() {
 
         return new Book(
                 0,
-                bookDTO.getLib(),
-                bookDTO.getName(),
-                bookDTO.getAuthor(),
-                bookDTO.getGenre(),
-                bookDTO.getPublishingHouse(),
-                bookDTO.getYearPublish(),
-                bookDTO.isBestSeller(),
-                bookDTO.getDescription(),
-                bookDTO.getState());
+                this.lib,
+                this.name,
+                this.author,
+                this.genre,
+                this.publishingHouse,
+                this.yearPublish,
+                this.bestSeller,
+                this.description,
+                this.state);
     }
 
     /**
@@ -84,33 +83,6 @@ public class BookDTO implements Serializable{
             bookDTOList.add(convertToBookDTO(book));
         }
         return bookDTOList;
-    }
-
-    public enum State {
-        /**
-         * Stored at the library
-         */
-        inSight,
-
-        /**
-         * Reader has taken this book
-         */
-        isGiven,
-
-        /**
-         * Tre book is spoiled and is waiting for reparation
-         */
-        isSpoiled,
-
-        /**
-         * The book is under reparation
-         */
-        isUnderRestoration,
-
-        /**
-         * The book is coming soon to the library
-         */
-        isCommingSoon
     }
 
     @JsonProperty

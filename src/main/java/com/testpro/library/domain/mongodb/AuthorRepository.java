@@ -58,7 +58,18 @@ public interface AuthorRepository extends MongoRepository<Author, String> {
      * @param yearOfBirth int
      * @return Author
      */
+    Author findOneByNameAndSurnameAndYearOfBirth(String name, String surname, int yearOfBirth);
+
+    /**
+     * Find author by name, surname and year of birth
+     *
+     * @param name        String
+     * @param surname     String
+     * @param yearOfBirth int
+     * @return Author
+     */
     List<Author> findAllByNameAndSurnameAndYearOfBirth(String name, String surname, int yearOfBirth);
+
 
     /**
      * Find author by name or surname
@@ -87,5 +98,5 @@ public interface AuthorRepository extends MongoRepository<Author, String> {
      * @param yearOfBirth int
      * @return List<Author>
      */
-    List<Author> deleteAllByNameAndSurnameAndYearOfBirth(String name, String surname, int yearOfBirth);
+    List<Author> deleteByNameAndSurnameAndYearOfBirth(String name, String surname, int yearOfBirth);
 }

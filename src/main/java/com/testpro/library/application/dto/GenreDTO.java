@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class GenreDTO implements Serializable {
 
-    @JsonProperty
+    @JsonProperty(value = "name")
     @NotBlank
-    @Size (max=25)
+    @Size(max = 25, min = 3)
     private String name;
 
-    @JsonProperty
+    @JsonProperty(value = "description")
     private String description;
 
     private GenreDTO(String name, String description) {
@@ -27,19 +27,39 @@ public class GenreDTO implements Serializable {
         this.description = description;
     }
 
-    public Genre convertToGenre(GenreDTO genreDTO) {
+    /**
+     * This method convert GenreDTO to Genre
+     *
+     * @return Genre class
+     */
+    public Genre convertToGenre() {
         return new Genre(
                 0,
-                genreDTO.getName(),
-                genreDTO.getDescription());
+                this.name,
+                this.description);
     }
 
+    /**
+     * This method convert Genre to GenreDTO
+     *
+     * @param genre Genre
+     * @return GenreDTO class
+     */
     public GenreDTO convertToGenreDTO(Genre genre) {
+        if (genre == null) {
+            return null;
+        }
         return new GenreDTO(
                 genre.getName(),
                 genre.getDescription());
     }
 
+    /**
+     * This method convert List<Genre> to List<GenreDTO>
+     *
+     * @param genreList List<Genre>
+     * @return List<GenreDTO> class
+     */
     public List<GenreDTO> convertToGenreDTOList(List<Genre> genreList) {
         List<GenreDTO> genreDTOList = new ArrayList<GenreDTO>();
         for (Genre genre : genreList) {

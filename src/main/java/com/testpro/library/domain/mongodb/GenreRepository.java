@@ -13,14 +13,14 @@ public interface GenreRepository extends MongoRepository<Genre, String> {
     /**
      * Find genre by it's name
      * @param name String
-     * @return List<Genre>
+     * @return Genre
      */
-    List<Genre> findAllByName(String name);
+    Genre findOneByName(String name);
 
     /**
      * Delete Genre by it's name
      * @param name String
-     * @return List<Genre>
+     * @return Genre
      */
-    List<Genre> deleteAllByName(String name);
+    List<Genre> deleteGenreByName(String name);
 }

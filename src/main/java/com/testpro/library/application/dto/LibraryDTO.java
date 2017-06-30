@@ -20,11 +20,14 @@ public final class LibraryDTO implements Serializable {
     /**
      * Method for converting of single LibraryDTO to Library
      *
-     * @param libraryDTO class
      * @return Library
      */
-    public Library convertToLibrary(LibraryDTO libraryDTO) {
-        return new Library(0, libraryDTO.getName(), libraryDTO.getAddress(), libraryDTO.getQuantityWorkers());
+    public Library convertToLibrary() {
+        return new Library(
+                0,
+                this.name,
+                this.address,
+                this.quantityWorkers);
     }
 
     /**
@@ -34,7 +37,13 @@ public final class LibraryDTO implements Serializable {
      * @return LibraryDTO
      */
     public LibraryDTO convertToLibraryDTO(Library library) {
-        return new LibraryDTO(library.getName(), library.getAddress(), library.getQuantityWorkers());
+        if (library == null) {
+            return null;
+        }
+        return new LibraryDTO(
+                library.getName(),
+                library.getAddress(),
+                library.getQuantityWorkers());
     }
 
     /**
@@ -43,7 +52,7 @@ public final class LibraryDTO implements Serializable {
      * @param libraryList List<Library>
      * @return List<LibraryDTO>
      */
-    public List<LibraryDTO> convertToLibraryDTOMap(List<Library> libraryList) {
+    public List<LibraryDTO> convertToLibraryDTOList(List<Library> libraryList) {
         List<LibraryDTO> librariesDTO = new ArrayList<LibraryDTO>();
         for (Library libraryIterator : libraryList) {
             librariesDTO.add(convertToLibraryDTO(libraryIterator));
@@ -57,16 +66,16 @@ public final class LibraryDTO implements Serializable {
         this.quantityWorkers = quantityWorkers;
     }
 
-    @JsonProperty
+    @JsonProperty(value = "name")
     @NotBlank
     @Size(max = 25)
     private String name;
 
-    @JsonProperty
+    @JsonProperty(value = "address")
     @NotBlank
     private String address;
 
-    @JsonProperty
+    @JsonProperty(value = "quantityWorkers")
     private int quantityWorkers;
 
     public String getName() {
@@ -79,18 +88,6 @@ public final class LibraryDTO implements Serializable {
 
     public int getQuantityWorkers() {
         return quantityWorkers;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setQuantityWorkers(int quantityWorkers) {
-        this.quantityWorkers = quantityWorkers;
     }
 
 }

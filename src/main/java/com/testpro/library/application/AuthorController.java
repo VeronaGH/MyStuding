@@ -54,13 +54,11 @@ public class AuthorController {
     /**
      * This method delete all documents which contains incoming  name, surname and date
      */
-
     @ResponseBody
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity deleteAuthor(@RequestBody final AuthorDTO authorDTO) {
-        List<Author> authorList = authorService.deleteAuthor(new AuthorDTO().convertToAuthor(authorDTO));
-        List<AuthorDTO> authorDTOList = new AuthorDTO().convertToAuthorDTOList(authorList);
-        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(authorDTOList);
+        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
+                new AuthorDTO().convertToAuthorDTO(authorService.deleteAuthor(authorDTO.convertToAuthor())));
     }
 
     /**
@@ -102,7 +100,7 @@ public class AuthorController {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateAuthor(@RequestBody final AuthorDTO authorDTO) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new AuthorDTO().convertToAuthorDTOList(authorService.updateAuthor(
-                        new AuthorDTO().convertToAuthor(authorDTO))));
+                new AuthorDTO().convertToAuthorDTO(authorService.updateAuthor(
+                        authorDTO.convertToAuthor())));
     }
 }

@@ -27,8 +27,6 @@ public final class Reader {
         Fined
     }
 
-    ;
-
     private final int id;
     private final String name;
     private final String surname;

@@ -26,7 +26,11 @@ public class GenreService {
      * @return genre
      */
     public Genre storeGenre(Genre genre) {
-        return genreRepository.save(genre);
+        Genre savingGenre = genreRepository.findOneByName(genre.getName());
+        if (savingGenre == null) {
+            return genreRepository.save(genre);
+        }
+        return null;
     }
 
     /**
@@ -35,12 +39,12 @@ public class GenreService {
      * @param genre Genre
      * @return List<genre>
      */
-    public List<Genre> deleteGenre(Genre genre) {
-        List<Genre> genreList = genreRepository.findAllByName(genre.getName());
-        if (genreList.size() == 1) {
-            genreList = genreRepository.deleteAllByName(genre.getName());
+    public Genre deleteGenre(Genre genre) {
+        Genre deletingGenre = genreRepository.findOneByName(genre.getName());
+        if (deletingGenre != null) {
+            return genreRepository.deleteGenreByName(genre.getName()).get(0);
         }
-        return genreList;
+        return null;
     }
 
     /**
@@ -49,8 +53,8 @@ public class GenreService {
      * @param genre Genre
      * @return List<Genre>
      */
-    public List<Genre> findByName(Genre genre) {
-        return genreRepository.findAllByName(genre.getName());
+    public Genre findByName(Genre genre) {
+        return genreRepository.findOneByName(genre.getName());
     }
 
     /**
@@ -62,15 +66,21 @@ public class GenreService {
         return genreRepository.findAll();
     }
 
-    public List<Genre> updateGenre(Genre genre) {
-        List<Genre> genreList = genreRepository.findAllByName(genre.getName());
-        if (genreList.size() == 1) {
+    /**
+     * Update genre from DB if could found, else return null
+     *
+     * @param genre Genre
+     * @return Genre
+     */
+    public Genre updateGenre(Genre genre) {
+        Genre updatingGenre = genreRepository.findOneByName(genre.getName());
+        if (updatingGenre != null) {
             genreRepository.save(new Genre(
-                    genreList.get(0).getId(),
+                    updatingGenre.getId(),
                     genre.getName(),
                     genre.getDescription()));
-            return genreRepository.findAllByName(genre.getName());
+            return genreRepository.findOneByName(genre.getName());
         }
-        return genreRepository.findAll();
+        return null;
     }
 }

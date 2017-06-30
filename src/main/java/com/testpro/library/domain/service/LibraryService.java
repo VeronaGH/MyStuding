@@ -27,7 +27,10 @@ public class LibraryService {
      * @return library
      */
     public Library saveLibrary(Library library) {
-        return libraryRepository.save(library);
+        if (libraryRepository.findAllByNameAndAddress(library.getName(), library.getAddress()).isEmpty()) {
+            return libraryRepository.save(library);
+        }
+        return null;
     }
 
     /**
@@ -36,8 +39,12 @@ public class LibraryService {
      * @param library class
      * @return List<Library>
      */
-    public List<Library> deleteLibrary(Library library) {
-        return libraryRepository.deleteByNameAndAddress(library.getName(), library.getAddress());
+    public Library deleteLibrary(Library library) {
+        List<Library> deleteLibrary = libraryRepository.deleteByNameAndAddress(library.getName(), library.getAddress());
+        if(!deleteLibrary.isEmpty()) {
+            return deleteLibrary.get(0);
+        }
+        return null;
     }
 
     /**

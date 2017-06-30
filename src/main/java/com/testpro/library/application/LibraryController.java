@@ -62,13 +62,8 @@ public class LibraryController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity deleteLibrary(@RequestBody final LibraryDTO libraryDTO) {
-        List<Library> delList = libraryService.deleteLibrary(new Library(
-                0,
-                libraryDTO.getName(),
-                libraryDTO.getAddress(),
-                libraryDTO.getQuantityWorkers()));
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new LibraryDTO().convertToLibraryDTOMap(delList));
+                new LibraryDTO().convertToLibraryDTO(libraryService.deleteLibrary(libraryDTO.convertToLibrary())));
     }
 
     /**
@@ -89,7 +84,7 @@ public class LibraryController {
             libraryList = libraryService.findLibraryByNameOrAdress(new Library(0, name, address, 0));
         }
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new LibraryDTO().convertToLibraryDTOMap(libraryList));
+                new LibraryDTO().convertToLibraryDTOList(libraryList));
     }
 
 
@@ -102,8 +97,8 @@ public class LibraryController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateLibrary(@RequestBody final LibraryDTO libraryDTO) {
-        List<Library> libraryList = libraryService.updateLibrary(new LibraryDTO().convertToLibrary(libraryDTO));
+        List<Library> libraryList = libraryService.updateLibrary(libraryDTO.convertToLibrary());
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new LibraryDTO().convertToLibraryDTOMap(libraryList));
+                new LibraryDTO().convertToLibraryDTOList(libraryList));
     }
 }
