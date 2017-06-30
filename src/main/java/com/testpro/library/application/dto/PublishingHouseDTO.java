@@ -67,20 +67,20 @@ public final class PublishingHouseDTO implements Serializable {
         return publishingHouseDTOList;
     }
 
-    @JsonProperty
+    @JsonProperty(value = "name")
     @NotBlank
     @Size(max = 25, min = 3)
     private String name;
 
-    @JsonProperty
+    @JsonProperty(value = "address")
     @NotBlank
     @Size(max = 50, min = 20)
     private String address;
 
-    @JsonProperty
+    @JsonProperty(value = "phone")
     private String phone;
 
-    @JsonProperty
+    @JsonProperty(value = "contact")
     private String contact;
 
     public String getName() {

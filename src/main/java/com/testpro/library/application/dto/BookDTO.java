@@ -85,37 +85,37 @@ public class BookDTO implements Serializable {
         return bookDTOList;
     }
 
-    @JsonProperty
+    @JsonProperty(value = "lib")
     @NotBlank
     @Size(max = 25)
     private Library lib;
 
-    @JsonProperty
+    @JsonProperty(value = "name")
     @NotBlank
     @Size(max = 25)
     private String name;
 
-    @JsonProperty
+    @JsonProperty(value = "author")
     @NotBlank
     @Size(max = 25)
     private Author author;
 
-    @JsonProperty
+    @JsonProperty(value = "genre")
     private Genre genre;
 
-    @JsonProperty
+    @JsonProperty(value = "publishingHouse")
     private String publishingHouse;
 
-    @JsonProperty
+    @JsonProperty(value = "yearPublish")
     private int yearPublish;
 
-    @JsonProperty
+    @JsonProperty(value = "bestSeller")
     private boolean bestSeller;
 
-    @JsonProperty
+    @JsonProperty(value = "description")
     private String description;
 
-    @JsonProperty
+    @JsonProperty(value = "state")
     private Book.State state;
 
     public Library getLib() {
