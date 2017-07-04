@@ -19,18 +19,26 @@ public interface LibraryRepository extends MongoRepository<Library, String> {
     List<Library> findAllByName(String name);
 
     /**
+     * Find library by address
+     *
+     * @param address String
+     * @return List<Library>
+     */
+    List<Library> findAllByAddress(String address);
+
+    /**
      * Find library by name and address
      *
      * @param address String
-     * @param name String
+     * @param name    String
      * @return List<Library>
      */
-    List<Library> findAllByNameAndAddress(String name,String address);
+    List<Library> findAllByNameAndAddress(String name, String address);
 
     /**
      * Delete all documents by name of library and address
      *
-     * @param name String
+     * @param name    String
      * @param Address string
      * @return List<Library>
      */
@@ -39,9 +47,17 @@ public interface LibraryRepository extends MongoRepository<Library, String> {
     /**
      * Find all Libraries by their name and address
      *
-     * @param name String
+     * @param name    String
      * @param address String
      * @return List<Library>
      */
     List<Library> findAllByNameOrAddress(String name, String address);
+
+    /**
+     * Return entity by it's ID
+     *
+     * @param id int
+     * @return Library
+     */
+    Library findOneById(int id);
 }

@@ -1,5 +1,6 @@
 package com.testpro.library.application;
 
+import com.testpro.library.application.convertots.PublishingHouseConverter;
 import com.testpro.library.application.dto.PublishingHouseDTO;
 import com.testpro.library.domain.model.PublishingHouse;
 import com.testpro.library.domain.service.IdService;
@@ -40,7 +41,7 @@ public class PublishingHouseController {
                     publishingHouseDTO.getPhone(),
                     publishingHouseDTO.getContact());
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                    new PublishingHouseDTO().convertToPublishHouseDTO(publishingHouseService.storePublishingHouse(publishingHouse)));
+                    new PublishingHouseConverter().convertToPublishHouseDTO(publishingHouseService.storePublishingHouse(publishingHouse)));
         }
         return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).contentType(MediaType.APPLICATION_JSON).body(
                 publishingHouseDTO);
@@ -53,8 +54,8 @@ public class PublishingHouseController {
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity deletePiblishHouse(@RequestBody PublishingHouseDTO publishingHouseDTO) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new PublishingHouseDTO().convertToPublishHouseDTOList(publishingHouseService.deletePublishingHouse(
-                        publishingHouseDTO.convertToPublishHouse())));
+                new PublishingHouseConverter().convertToPublishingHouseDTOList(publishingHouseService.deletePublishingHouse(
+                        new PublishingHouseConverter().convertToPublishHouse(publishingHouseDTO))));
     }
 
     /**
@@ -69,7 +70,7 @@ public class PublishingHouseController {
             @RequestParam(value = "phone", required = false) String phone,
             @RequestParam(value = "contact", required = false) String contact) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new PublishingHouseDTO().convertToPublishHouseDTOList(publishingHouseService.findPublishingHouse(
+                new PublishingHouseConverter().convertToPublishingHouseDTOList(publishingHouseService.findPublishingHouse(
                         new PublishingHouse(0, name, address, phone, contact))));
     }
 
@@ -81,7 +82,7 @@ public class PublishingHouseController {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updatePublishingHouse(@RequestBody PublishingHouseDTO publishingHouseDTO) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new PublishingHouseDTO().convertToPublishHouseDTO(publishingHouseService.updatePublishingHouse(
-                        publishingHouseDTO.convertToPublishHouse())));
+                new PublishingHouseConverter().convertToPublishHouseDTO(publishingHouseService.updatePublishingHouse(
+                        new PublishingHouseConverter().convertToPublishHouse(publishingHouseDTO))));
     }
 }

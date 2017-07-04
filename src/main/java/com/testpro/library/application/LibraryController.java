@@ -1,5 +1,6 @@
 package com.testpro.library.application;
 
+import com.testpro.library.application.convertots.LibraryConverter;
 import com.testpro.library.application.dto.LibraryDTO;
 import com.testpro.library.domain.model.Library;
 import com.testpro.library.domain.service.IdService;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +23,6 @@ public class LibraryController {
 
     private LibraryService libraryService;
     private IdService idService;
-
-    public Library library;
 
     @Autowired
     public LibraryController(LibraryService libraryService, IdService idService) {
@@ -42,13 +40,12 @@ public class LibraryController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity storeLibrary(@RequestBody final LibraryDTO libraryDTO) {
         if ((libraryDTO.getName() != null) && (libraryDTO.getAddress() != null)) {
-            library = libraryService.saveLibrary(new Library(
-                    idService.incIdLibrary(),
-                    libraryDTO.getName(),
-                    libraryDTO.getAddress(),
-                    libraryDTO.getQuantityWorkers()));
             return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(
-                    new LibraryDTO().convertToLibraryDTO(library));
+                    new LibraryConverter().convertToLibraryDTO(libraryService.storeLibrary(new Library(
+                            idService.incIdLibrary(),
+                            libraryDTO.getName(),
+                            libraryDTO.getAddress(),
+                            libraryDTO.getQuantityWorkers()))));
         }
         return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).contentType(MediaType.APPLICATION_JSON).body(libraryDTO);
     }
@@ -63,7 +60,7 @@ public class LibraryController {
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity deleteLibrary(@RequestBody final LibraryDTO libraryDTO) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new LibraryDTO().convertToLibraryDTO(libraryService.deleteLibrary(libraryDTO.convertToLibrary())));
+                new LibraryConverter().convertToLibraryDTO(libraryService.deleteLibrary(new LibraryConverter().convertToLibrary(libraryDTO))));
     }
 
     /**
@@ -76,15 +73,11 @@ public class LibraryController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity searchLibrary(
             @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "address", required = false) String address) {
-        List<Library> libraryList;
-        if (StringUtils.isEmpty(name) && StringUtils.isEmpty(address)) {
-            libraryList = libraryService.readLibrary();
-        } else {
-            libraryList = libraryService.findLibraryByNameOrAdress(new Library(0, name, address, 0));
-        }
+            @RequestParam(value = "address", required = false) String address,
+            @RequestParam(value = "quantityWorkers", required = false) int quantityWorkers) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new LibraryDTO().convertToLibraryDTOList(libraryList));
+                new LibraryConverter().convertToLibraryDTOList(libraryService.findLibrary(
+                        new Library(0, name, address, quantityWorkers))));
     }
 
 
@@ -97,8 +90,8 @@ public class LibraryController {
     @ResponseBody
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateLibrary(@RequestBody final LibraryDTO libraryDTO) {
-        List<Library> libraryList = libraryService.updateLibrary(libraryDTO.convertToLibrary());
+        List<Library> libraryList = libraryService.updateLibrary(new LibraryConverter().convertToLibrary(libraryDTO));
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new LibraryDTO().convertToLibraryDTOList(libraryList));
+                new LibraryConverter().convertToLibraryDTOList(libraryList));
     }
 }

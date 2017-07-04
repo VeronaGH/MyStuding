@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Component
 public class GenreService {
-    private GenreRepository genreRepository;
+    private final GenreRepository genreRepository;
 
     @Autowired
     public GenreService(GenreRepository genreRepository) {
@@ -80,6 +80,33 @@ public class GenreService {
                     genre.getName(),
                     genre.getDescription()));
             return genreRepository.findOneByName(genre.getName());
+        }
+        return null;
+    }
+
+    /**
+     * Return ID of entity
+     *
+     * @param genre Genre
+     * @return int ID
+     */
+    public int returnGenreId(Genre genre) {
+        Genre searchGenre = genreRepository.findOneByName(genre.getName());
+        if (searchGenre != null) {
+            return searchGenre.getId();
+        } else return -1;
+    }
+
+    /**
+     * Return entity by it's ID
+     *
+     * @param id int
+     * @return genre class
+     */
+    public Genre findGenreByID(int id) {
+        Genre genre = genreRepository.findOneById(id);
+        if (genre != null) {
+            return genre;
         }
         return null;
     }

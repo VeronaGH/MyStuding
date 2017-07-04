@@ -1,9 +1,6 @@
 package com.testpro.library.domain.mongodb;
 
-import com.testpro.library.domain.model.Author;
-import com.testpro.library.domain.model.Book;
-import com.testpro.library.domain.model.Genre;
-import com.testpro.library.domain.model.Library;
+import com.testpro.library.domain.model.*;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
@@ -15,10 +12,10 @@ public interface BookRepository extends MongoRepository<Book, String> {
 
     /**
      * Find book by library where stored
-     * @param lib Library
+     * @param library int
      * @return List<Book>
      */
-    List<Book> findAllByLib(Library lib);
+    List<Book> findAllByLibraryId(int library);
 
     /**
      * Find book by name
@@ -29,24 +26,24 @@ public interface BookRepository extends MongoRepository<Book, String> {
 
     /**
      * Find book by author
-     * @param author Author
+     * @param authorId int
      * @return List<Book>
      */
-    List<Book> findAllByAuthor(Author author);
+    List<Book> findAllByAuthorId(int authorId);
 
     /**
      * Find book by genre
-     * @param genre Genre
+     * @param genreId int
      * @return List<Book>
      */
-    List<Book> findAllByGenre(Genre genre);
+    List<Book> findAllByGenreId(int genreId);
 
     /**
      * Find book by publish house
-     * @param publishingHouse String
+     * @param publishingHouseId class
      * @return List<Book>
      */
-    List<Book> findAllByPublishingHouse(String publishingHouse);
+    List<Book> findAllByPublishingHouseId(int publishingHouseId);
 
     /**
      * Find book by year when it was published
@@ -67,7 +64,7 @@ public interface BookRepository extends MongoRepository<Book, String> {
      * @param state String
      * @return List<Book>
      */
-    List<Book> findAllByState(String state);
+    List<Book> findAllByState(Book.State state);
 
 
 }

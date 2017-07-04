@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Service
 public class PublishingHouseService {
+
     private final PublishingHouseRepository publishingHouseRepository;
 
     @Autowired
@@ -94,7 +95,7 @@ public class PublishingHouseService {
      * @param publishingHouse class
      * @return List<PublishingHouse>
      */
-    public PublishingHouse updatePublishingHouse (PublishingHouse publishingHouse){
+    public PublishingHouse updatePublishingHouse(PublishingHouse publishingHouse) {
         PublishingHouse updatingPublishingHouse = publishingHouseRepository.findByNameAndAddress(
                 publishingHouse.getName(),
                 publishingHouse.getAddress());
@@ -105,6 +106,33 @@ public class PublishingHouseService {
                     publishingHouse.getAddress(),
                     publishingHouse.getPhone(),
                     publishingHouse.getContact()));
+        }
+        return null;
+    }
+
+    /**
+     * Find PublishingHousr by it's ID
+     *
+     * @param publishingHouse class
+     * @return int
+     */
+    public int returnPublishingHouseId(PublishingHouse publishingHouse) {
+        List<PublishingHouse> searchPublishingHouse = publishingHouseRepository.findAllByName(publishingHouse.getName());
+        if (searchPublishingHouse.size() == 1) {
+            return searchPublishingHouse.get(0).getId();
+        } else return -1;
+    }
+
+    /**
+     * Return PH by it's ID
+     *
+     * @param id int
+     * @return PublishingHouse
+     */
+    public PublishingHouse findPublishingHouseById(int id) {
+        PublishingHouse publishingHouse = publishingHouseRepository.findOneById(id);
+        if (publishingHouse != null) {
+            return publishingHouse;
         }
         return null;
     }

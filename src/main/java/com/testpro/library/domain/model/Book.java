@@ -34,30 +34,30 @@ public final class Book {
         /**
          * The book is coming soon to the library
          */
-        isCommingSoon
+        isComingSoon
     }
 
     @Id
     private final int id;
-    private final Library lib;
+    private final int libraryId;
     private final String name;
-    private final Author author;
-    private final Genre genre;
-    private final String publishingHouse;
+    private final int authorId;
+    private final int genreId;
+    private final int publishingHouseId;
     private final int yearPublish;
     private final boolean bestSeller;
     private final String description;
     private final State state;
 
-    public Book(final int id, final Library lib, final String name, final Author author, final Genre genre,
-                final String publishingHouse, final int yearPublish, final boolean bestSeller, final String description,
+    public Book(final int id, final int libraryId, final String name, final int authorId, final int genreId,
+                final int publishingHouseId, final int yearPublish, final boolean bestSeller, final String description,
                 final State state) {
         this.id = id;
-        this.lib = lib;
+        this.libraryId = libraryId;
         this.name = name;
-        this.author = author;
-        this.genre = genre;
-        this.publishingHouse = publishingHouse;
+        this.authorId = authorId;
+        this.genreId = genreId;
+        this.publishingHouseId = publishingHouseId;
         this.yearPublish = yearPublish;
         this.bestSeller = bestSeller;
         this.description = description;
@@ -68,24 +68,24 @@ public final class Book {
         return id;
     }
 
-    public Library getLib() {
-        return lib;
+    public int getLibraryId() {
+        return libraryId;
     }
 
     public String getName() {
         return name;
     }
 
-    public Author getAutor() {
-        return author;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public Genre getGenre() {
-        return genre;
+    public int getGenreId() {
+        return genreId;
     }
 
-    public String getPublishingHouse() {
-        return publishingHouse;
+    public int getPublishingHouseId() {
+        return publishingHouseId;
     }
 
     public int getYearPublish() {
@@ -103,5 +103,4 @@ public final class Book {
     public State getState() {
         return state;
     }
-
 }

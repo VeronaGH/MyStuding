@@ -99,4 +99,12 @@ public interface AuthorRepository extends MongoRepository<Author, String> {
      * @return List<Author>
      */
     List<Author> deleteByNameAndSurnameAndYearOfBirth(String name, String surname, int yearOfBirth);
+
+    /**
+     * Find entity by ID
+     *
+     * @param id int
+     * @return Author
+     */
+    Author findOneById(int id);
 }

@@ -12,6 +12,7 @@ public interface GenreRepository extends MongoRepository<Genre, String> {
 
     /**
      * Find genre by it's name
+     *
      * @param name String
      * @return Genre
      */
@@ -19,8 +20,17 @@ public interface GenreRepository extends MongoRepository<Genre, String> {
 
     /**
      * Delete Genre by it's name
+     *
      * @param name String
      * @return Genre
      */
     List<Genre> deleteGenreByName(String name);
+
+    /**
+     * Find entity by ID
+     *
+     * @param id int
+     * @return Genre
+     */
+    Genre findOneById(int id);
 }

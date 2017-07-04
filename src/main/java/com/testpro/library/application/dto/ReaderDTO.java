@@ -8,17 +8,18 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
- * Created by Pigas on 30.06.2017.
+ * Data transfer object class for parsing incoming data for ReaderController
  */
-public class ReaderDTO implements Serializable{
+public class ReaderDTO implements Serializable {
 
-    public ReaderDTO() {
-    }
-
-    public ReaderDTO(String name, String surname, String address) {
+    public ReaderDTO(String name, String surname, String address, Reader.State state) {
         this.name = name;
         this.surname = surname;
         this.address = address;
+        this.state = state;
+    }
+
+    public ReaderDTO() {
     }
 
     @JsonProperty(value = "name")
@@ -35,6 +36,10 @@ public class ReaderDTO implements Serializable{
     @Size(max = 25, min = 2)
     private String address;
 
+    @JsonProperty(value = "state")
+    @NotBlank
+    private Reader.State state;
+
     public String getName() {
         return name;
     }
@@ -47,4 +52,7 @@ public class ReaderDTO implements Serializable{
         return address;
     }
 
+    public Reader.State getState() {
+        return state;
+    }
 }

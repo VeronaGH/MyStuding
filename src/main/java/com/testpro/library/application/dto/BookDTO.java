@@ -1,28 +1,24 @@
 package com.testpro.library.application.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.testpro.library.domain.model.Author;
 import com.testpro.library.domain.model.Book;
-import com.testpro.library.domain.model.Genre;
-import com.testpro.library.domain.model.Library;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * Data transfer object class for parsing incoming data for BookController
  */
 public class BookDTO implements Serializable {
 
-    private BookDTO(Library lib, String name, Author author, Genre genre, String publishingHouse, int yearPublish, boolean bestSeller, String description, Book.State state) {
-        this.lib = lib;
+    public BookDTO(LibraryDTO libraryDTO, String name, AuthorDTO authorDTO, GenreDTO genreDTO, PublishingHouseDTO publishingHouseDTO, int yearPublish, boolean bestSeller, String description, Book.State state) {
+        this.libraryDTO = libraryDTO;
         this.name = name;
-        this.author = author;
-        this.genre = genre;
-        this.publishingHouse = publishingHouse;
+        this.authorDTO = authorDTO;
+        this.genreDTO = genreDTO;
+        this.publishingHouseDTO = publishingHouseDTO;
         this.yearPublish = yearPublish;
         this.bestSeller = bestSeller;
         this.description = description;
@@ -32,63 +28,10 @@ public class BookDTO implements Serializable {
     public BookDTO() {
     }
 
-    /**
-     * Convert  BookDTO object to Book object
-     *
-     * @return Book
-     */
-    public Book convertToBook() {
-
-        return new Book(
-                0,
-                this.lib,
-                this.name,
-                this.author,
-                this.genre,
-                this.publishingHouse,
-                this.yearPublish,
-                this.bestSeller,
-                this.description,
-                this.state);
-    }
-
-    /**
-     * Convert  Book object to BookDTO object
-     *
-     * @param book Book
-     * @return BookDTO
-     */
-    public BookDTO convertToBookDTO(Book book) {
-        return new BookDTO(
-                book.getLib(),
-                book.getName(),
-                book.getAutor(),
-                book.getGenre(),
-                book.getPublishingHouse(),
-                book.getYearPublish(),
-                book.isBestSeller(),
-                book.getDescription(),
-                book.getState());
-    }
-
-    /**
-     * Convert  List<Book> object to List<BookDTO> object
-     *
-     * @param bookList List<Book>
-     * @return List<BookDTO>
-     */
-    public List<BookDTO> convertToBookList(List<Book> bookList) {
-        List<BookDTO> bookDTOList = new ArrayList<BookDTO>();
-        for (Book book : bookList) {
-            bookDTOList.add(convertToBookDTO(book));
-        }
-        return bookDTOList;
-    }
-
-    @JsonProperty(value = "lib")
+    @JsonProperty(value = "library")
     @NotBlank
     @Size(max = 25)
-    private Library lib;
+    private LibraryDTO libraryDTO;
 
     @JsonProperty(value = "name")
     @NotBlank
@@ -98,13 +41,13 @@ public class BookDTO implements Serializable {
     @JsonProperty(value = "author")
     @NotBlank
     @Size(max = 25)
-    private Author author;
+    private AuthorDTO authorDTO;
 
     @JsonProperty(value = "genre")
-    private Genre genre;
+    private GenreDTO genreDTO;
 
     @JsonProperty(value = "publishingHouse")
-    private String publishingHouse;
+    private PublishingHouseDTO publishingHouseDTO;
 
     @JsonProperty(value = "yearPublish")
     private int yearPublish;
@@ -118,24 +61,24 @@ public class BookDTO implements Serializable {
     @JsonProperty(value = "state")
     private Book.State state;
 
-    public Library getLib() {
-        return lib;
+    public LibraryDTO getLibraryDTO() {
+        return libraryDTO;
     }
 
     public String getName() {
         return name;
     }
 
-    public Author getAuthor() {
-        return author;
+    public AuthorDTO getAuthorDTO() {
+        return authorDTO;
     }
 
-    public Genre getGenre() {
-        return genre;
+    public GenreDTO getGenreDTO() {
+        return genreDTO;
     }
 
-    public String getPublishingHouse() {
-        return publishingHouse;
+    public PublishingHouseDTO getPublishingHouseDTO() {
+        return publishingHouseDTO;
     }
 
     public int getYearPublish() {

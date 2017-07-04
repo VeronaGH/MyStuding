@@ -1,5 +1,6 @@
 package com.testpro.library.application;
 
+import com.testpro.library.application.convertots.GenreConverter;
 import com.testpro.library.application.dto.GenreDTO;
 import com.testpro.library.domain.model.Genre;
 import com.testpro.library.domain.service.GenreService;
@@ -40,7 +41,7 @@ public class GenreController {
                     genreDTO.getName(),
                     genreDTO.getDescription());
             return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(
-                    new GenreDTO().convertToGenreDTO(genreService.storeGenre(genre)));
+                    new GenreConverter().convertToGenreDTO(genreService.storeGenre(genre)));
         }
         return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).contentType(MediaType.APPLICATION_JSON).body(genreDTO);
     }
@@ -55,7 +56,7 @@ public class GenreController {
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity deleteGenre(@RequestBody final GenreDTO genreDTO) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new GenreDTO().convertToGenreDTO(genreService.deleteGenre(genreDTO.convertToGenre())));
+                new GenreConverter().convertToGenreDTO(genreService.deleteGenre(new GenreConverter().convertToGenre(genreDTO))));
     }
 
     /**
@@ -71,10 +72,10 @@ public class GenreController {
             @RequestParam(value = "description", required = false) final String description) {
         if (name != null) {
             return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                    new GenreDTO().convertToGenreDTO(genreService.findByName(new Genre(0, name, description))));
+                    new GenreConverter().convertToGenreDTO(genreService.findByName(new Genre(0, name, description))));
         }
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new GenreDTO().convertToGenreDTOList(genreService.findAll()));
+                new GenreConverter().convertToGenreDTOList(genreService.findAll()));
     }
 
     /**
@@ -87,6 +88,6 @@ public class GenreController {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateGenre(@RequestBody final GenreDTO genreDTO) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new GenreDTO().convertToGenreDTO(genreService.updateGenre(genreDTO.convertToGenre())));
+                new GenreConverter().convertToGenreDTO(genreService.updateGenre(new GenreConverter().convertToGenre(genreDTO))));
     }
 }

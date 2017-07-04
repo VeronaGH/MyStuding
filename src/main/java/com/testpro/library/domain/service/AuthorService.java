@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Service
 public class AuthorService {
+
     private final AuthorRepository authorRepository;
 
     @Autowired
@@ -128,6 +129,31 @@ public class AuthorService {
                     author.getCitizenship(),
                     author.getBiography(),
                     author.isStillAlive()));
+        }
+        return null;
+    }
+
+    /**
+     * Return ID of entity from DB
+     *
+     * @param author Author
+     * @return int ID
+     */
+    public int returnAuthorId(Author author) {
+        Author searchAuthor = authorRepository.findOneByNameAndSurnameAndYearOfBirth(
+                author.getName(),
+                author.getSurname(),
+                author.getYearOfBirth());
+        if (searchAuthor != null) {
+            return searchAuthor.getId();
+        }
+        return -1;
+    }
+
+    public Author findAuthorByID(int id) {
+        Author author = authorRepository.findOneById(id);
+        if (author != null) {
+            return author;
         }
         return null;
     }

@@ -1,5 +1,6 @@
 package com.testpro.library.application;
 
+import com.testpro.library.application.convertots.AuthorConverter;
 import com.testpro.library.application.dto.AuthorDTO;
 import com.testpro.library.domain.model.Author;
 import com.testpro.library.domain.service.AuthorService;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Controller for processing incoming json contains Author data
  */
-@Controller
+@RestController
 @RequestMapping(value = "/library/v1/authors")
 public class AuthorController {
 
@@ -46,7 +46,7 @@ public class AuthorController {
                     authorDTO.getBiography(),
                     authorDTO.isStillAlive()));
             return ResponseEntity.status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON).body(
-                    new AuthorDTO().convertToAuthorDTO(author));
+                    new AuthorConverter().convertToAuthorDTO(author));
         }
         return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).contentType(MediaType.APPLICATION_JSON).body(authorDTO);
     }
@@ -58,7 +58,7 @@ public class AuthorController {
     @RequestMapping(method = RequestMethod.DELETE)
     public ResponseEntity deleteAuthor(@RequestBody final AuthorDTO authorDTO) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new AuthorDTO().convertToAuthorDTO(authorService.deleteAuthor(authorDTO.convertToAuthor())));
+                new AuthorConverter().convertToAuthorDTO(authorService.deleteAuthor(new AuthorConverter().convertToAuthor(authorDTO))));
     }
 
     /**
@@ -89,7 +89,7 @@ public class AuthorController {
                 biography,
                 stillAlive.contains("true")));
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new AuthorDTO().convertToAuthorDTOList(authorList));
+                new AuthorConverter().convertToAuthorDTOList(authorList));
     }
 
     /**
@@ -100,7 +100,7 @@ public class AuthorController {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity updateAuthor(@RequestBody final AuthorDTO authorDTO) {
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
-                new AuthorDTO().convertToAuthorDTO(authorService.updateAuthor(
-                        authorDTO.convertToAuthor())));
+                new AuthorConverter().convertToAuthorDTO(authorService.updateAuthor(
+                        new AuthorConverter().convertToAuthor(authorDTO))));
     }
 }

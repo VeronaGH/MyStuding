@@ -20,7 +20,7 @@ public final class Reader {
         /**
          * The reader signature is marked as archived
          */
-        Delited,
+        Deleted,
         /**
          * The reader is fined and blocked
          */

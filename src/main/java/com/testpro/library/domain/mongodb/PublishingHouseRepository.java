@@ -50,4 +50,12 @@ public interface PublishingHouseRepository extends MongoRepository<PublishingHou
      */
     List<PublishingHouse> deleteByNameAndAddress(String name, String address);
 
+    /**
+     * Find entity by it's ID
+     *
+     * @param id int
+     * @return PublishingHouse
+     */
+    PublishingHouse findOneById(int id);
+
 }
