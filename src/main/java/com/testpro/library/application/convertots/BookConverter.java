@@ -79,6 +79,9 @@ public class BookConverter {
      * @return List<BookDTO>
      */
     public List<BookDTO> convertToBookDTOList(List<Book> bookList) {
+        if (bookList == null) {
+            return null;
+        }
         List<BookDTO> bookDTOList = new ArrayList<BookDTO>();
         for (Book book : bookList) {
             bookDTOList.add(convertToBookDTO(book));

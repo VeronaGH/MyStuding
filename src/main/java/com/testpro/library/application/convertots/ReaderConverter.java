@@ -2,6 +2,7 @@ package com.testpro.library.application.convertots;
 
 import com.testpro.library.application.dto.ReaderDTO;
 import com.testpro.library.domain.model.Reader;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * Converter class for entity Reader
  */
+@Component
 public class ReaderConverter {
 
     /**

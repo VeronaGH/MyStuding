@@ -1,72 +1,39 @@
 package com.testpro.library.domain.model;
 
+import org.springframework.stereotype.Component;
+
 /**
- * Entity class for entity "Jornal", immutable, has full constructor, has n't got overridden method toString();
+ * Entity class for entity "Journal", immutable, has full constructor, has n't got overridden method toString();
  * Is necessary for storing of a book using history.
  */
 public final class Journal {
 
-    /**
-     * enum determining the state of a book
-     */
-    public enum State {
-        /**
-         * Stored at the library
-         */
-        inSight,
-
-        /**
-         * Reader has taken this book
-         */
-        isGiven,
-
-        /**
-         * Tre book is spoiled and is waiting for reparation
-         */
-        isSpoiled,
-
-        /**
-         * The book is under reparation
-         */
-        isUnderRestoration,
-
-        /**
-         * The book is coming soon to the library
-         */
-        isCommingSoon
-    }
-
-    ;
-
-    private final long id;
-    private final Library forLib;
-    private final Book book;
+    private final int id;
+    private final int libraryId;
+    private final int bookId;
     private final String dayTaken;
     private final String dayReturn;
-    private final Reader reader;
-    private final State state;
+    private final int readerId;
 
-    public Journal(final long id, final Library forLib, final Book book, final String dayTaken,
-                   final String dayReturn, final Reader reader, final State state) {
+    public Journal(int id, int libraryID, int bookId, String dayTaken, String dayReturn, int readerID) {
         this.id = id;
-        this.forLib = forLib;
-        this.book = book;
+        this.libraryId = libraryID;
+        this.bookId = bookId;
         this.dayTaken = dayTaken;
         this.dayReturn = dayReturn;
-        this.reader = reader;
-        this.state = state;
+        this.readerId = readerID;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public Library getForLib() {
-        return forLib;
+    public int getLibraryId() {
+        return libraryId;
     }
 
-    public Book getBook() {
-        return book;
+    public int getBookId() {
+        return bookId;
     }
 
     public String getDayTaken() {
@@ -77,11 +44,7 @@ public final class Journal {
         return dayReturn;
     }
 
-    public Reader getReader() {
-        return reader;
-    }
-
-    public State getState() {
-        return state;
+    public int getReaderId() {
+        return readerId;
     }
 }

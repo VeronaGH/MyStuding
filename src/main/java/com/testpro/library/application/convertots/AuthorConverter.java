@@ -2,6 +2,7 @@ package com.testpro.library.application.convertots;
 
 import com.testpro.library.application.dto.AuthorDTO;
 import com.testpro.library.domain.model.Author;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * Converter class for entity Author
  */
+@Component
 public class AuthorConverter {
 
     /**

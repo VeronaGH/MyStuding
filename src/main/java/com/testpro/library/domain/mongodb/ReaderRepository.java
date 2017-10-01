@@ -77,4 +77,21 @@ public interface ReaderRepository extends MongoRepository<Reader, String> {
      * @return List<Reader>
      */
     List<Reader> deleteReaderByNameAndSurname(String name, String surname);
+
+    /**
+     * find one Readers by their's name or surname
+     *
+     * @param name String
+     * @param surname String
+     * @return Reader
+     */
+    Reader findOneByNameAndSurname(String name, String surname);
+
+    /**
+     * find one Readers by ID
+     *
+     * @param readerId int
+     * @return Reader
+     */
+    Reader findOneById(int readerId);
 }

@@ -36,7 +36,6 @@ public final class Author implements Serializable {
                 + ",    biography : " + biography + ",    stillAlive : " + stillAlive;
     }
 
-
     public int getId() {
         return id;
     }

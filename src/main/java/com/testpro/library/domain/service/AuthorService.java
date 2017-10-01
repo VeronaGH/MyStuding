@@ -150,6 +150,12 @@ public class AuthorService {
         return -1;
     }
 
+    /**
+     * Find entity in DB by it's ID
+     *
+     * @param id int
+     * @return author Author
+     */
     public Author findAuthorByID(int id) {
         Author author = authorRepository.findOneById(id);
         if (author != null) {

@@ -2,6 +2,7 @@ package com.testpro.library.application.convertots;
 
 import com.testpro.library.application.dto.GenreDTO;
 import com.testpro.library.domain.model.Genre;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * Converter class for entity Genre
  */
+@Component
 public class GenreConverter {
 
     /**

@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Component
 public class GenreService {
+
     private final GenreRepository genreRepository;
 
     @Autowired

@@ -74,10 +74,13 @@ public class LibraryController {
     public ResponseEntity searchLibrary(
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "address", required = false) String address,
-            @RequestParam(value = "quantityWorkers", required = false) int quantityWorkers) {
+            @RequestParam(value = "quantityWorkers", required = false) String quantityWorkers) {
+        if (quantityWorkers == null) {
+            quantityWorkers = "0";
+        }
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON).body(
                 new LibraryConverter().convertToLibraryDTOList(libraryService.findLibrary(
-                        new Library(0, name, address, quantityWorkers))));
+                        new Library(0, name, address, Integer.parseInt(quantityWorkers)))));
     }
 
 

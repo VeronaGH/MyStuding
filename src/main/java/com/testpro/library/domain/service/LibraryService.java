@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Service
 public class LibraryService {
+
     private final LibraryRepository libraryRepository;
 
     @Autowired

@@ -100,4 +100,31 @@ public class ReaderService {
         }
         return null;
     }
+
+    /**
+     * Return ID of entity from DB
+     *
+     * @param reader Reader
+     * @return int ID
+     */
+    public int returnReaderId(Reader reader) {
+        Reader searchReader = readerRepository.findOneByNameAndSurname(
+                reader.getName(),
+                reader.getSurname());
+        if (searchReader != null) {
+            return searchReader.getId();
+        }
+        return -1;
+    }
+
+    /**
+     * Find reader by it's Id
+     *
+     * @param readerId int
+     * @return Reader
+     */
+    public Reader findReaderById(int readerId) {
+        return readerRepository.findOneById(readerId);
+
+    }
 }
